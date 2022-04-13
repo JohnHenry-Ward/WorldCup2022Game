@@ -1,0 +1,62 @@
+:root{
+    --dark-blue: #1077C3;
+    --light-blue: #49BCE3;
+    --yellow: #FEC310;
+    --maroon: #56042C;
+    --green: #27AE60;
+}
+
+.leaguesTitle{
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 0;
+}
+
+.leagues{
+    background-color: lightgray;
+    padding: 1vh 5vw;
+    margin: 0 25vw 5vh 25vw;
+    border-radius: 15px;
+}
+
+.noLeaguesFiller{
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 200;
+}
+
+.league{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--green);
+    margin: 1vw;
+    padding: 0.5vw;
+    border-radius: 15px;
+    color: white;
+}
+
+.leagueLogo{
+    width: 2em;
+}
+
+.leagueInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 40%;
+    /* border: 1px solid red; */
+}
+
+.leagueGoToBTN{
+    background-color: var(--yellow);
+    /* margin-right: 5%; */
+    padding: 1em;
+    border: 0;
+    border-radius: 15px;
+    color: white;
+}
+
+.leagueGoToBTN:hover{
+    cursor: pointer;
+}

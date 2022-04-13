@@ -1,0 +1,45 @@
+:root{
+    --dark-blue: #1077C3;
+    --light-blue: #49BCE3;
+    --yellow: #FEC310;
+    --maroon: #56042C;
+    --green: #27AE60;
+}
+
+.popupBG{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: darkgray;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    /* backdrop-filter: blur(2px); */
+    /* filter: blur(8px); */
+    /* -webkit-filter: blur(8px); */
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 15px;
+    padding: 0 2% 1% 2%;
+}
+
+.createTitle{
+    margin: 0 0 10% 0;
+}
+
+.createLeagueForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+}

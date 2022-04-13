@@ -1,0 +1,28 @@
+:root{
+    --dark-blue: #1077C3;
+    --light-blue: #49BCE3;
+    --yellow: #FEC310;
+    --maroon: #56042C;
+    --green: #27AE60;
+}
+
+.leagueBtnWrapper{
+    display: flex;
+    margin: 5vh auto auto auto;
+    width: 30%;
+    justify-content: space-evenly;
+}
+
+.leagueCreateJoinBTN{
+    background-color: var(--dark-blue);
+    border: none;
+    border-radius: 15px;
+    padding: 1em 2em;
+    margin: 0 2em;
+    font-size: 1.2em;
+    color: white;
+}
+
+.leagueCreateJoinBTN:hover{
+    cursor: pointer;
+}
