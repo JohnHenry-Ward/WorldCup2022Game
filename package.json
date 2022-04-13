@@ -1,0 +1,25 @@
+{
+  "name": "homepage",
+  "version": "1.0.0",
+  "description": "homepage v1 for the world cup pick em",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "client-install": "npm install --prefix client",
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "JH",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "concurrently": "^7.1.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.3",
+    "google-auth-library": "^7.14.1",
+    "mongoose": "^6.2.7",
+    "nodemon": "^2.0.15",
+    "uuid": "^8.3.2"
+  }
+}
