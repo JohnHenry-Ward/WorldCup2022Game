@@ -17,6 +17,7 @@ router.use(cookieParser());
 
 /* MongoDB Models */
 const Leagues = require('../models/Leagues');
+const Users = require('../models/Users');
 
 /* Routes */
 
@@ -69,6 +70,7 @@ router.post('/create', async (req, res) => {
         playerID: cookies['id']
     };
 
+    // create the league
     const newLeague = new Leagues({
         name,
         password,
@@ -83,9 +85,13 @@ router.post('/create', async (req, res) => {
             console.log(err);
         } else {
             console.log('New League successfully created');
-            console.log(league);
+            // console.log(league);
         }
     });
+
+    // add the league to the users document
+    const result = await Users.findOneAndUpdate({ 'id' : cookies['id'] }, { $push: { leagues: { id: leagueID, name: name } }});
+    console.log(result);
 
     res.redirect('/');
 });
@@ -98,7 +104,6 @@ router.post('/create', async (req, res) => {
 */
 router.post('/join', async (req, res) => {
     const payload = req.body;
-    const tempName = payload['tempName'];
     const leagueID = payload['leagueID'];
     const leaguePassword = payload['leaguePassword'];
     const cookies = req.cookies;
@@ -108,8 +113,30 @@ router.post('/join', async (req, res) => {
         isCreator: false
     };
 
-    const result = await Leagues.findOneAndUpdate({ leagueID, leaguePassword }, { $push: { players: newPlayer}});
-    console.log(result);
+    // add user to the league
+    Leagues.findOneAndUpdate({leagueID, leaguePassword, 'players.playerID': {$ne: cookies['id']}}, 
+                             {$addToSet: {players: newPlayer}});
+
+
+    // add league to user (this can be cleaned up)
+    Leagues.find({leagueID, leaguePassword}, (err, doc) => {
+        if (err) {
+            console.log('Error adding league to user');
+        } else {
+            console.log('attempting to add league to user');
+            console.log(doc[0].name);
+            Users.findOneAndUpdate({'id' : cookies['id'], 'leagues.id': {$ne: leagueID}}, 
+                                    {$addToSet: { leagues: { id: leagueID, name: doc[0].name }}},
+                                    (err, doc) => {
+                                        if (err) {
+                                            console.log('Error adding league to user')
+                                        } else {
+                                            console.log('success!');
+                                        }
+                                    });
+        }
+    });
+
     res.redirect('/');
 });
 

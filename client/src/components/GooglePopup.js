@@ -5,6 +5,9 @@ import { NavLink } from 'react-router-dom';
 /* Internal Requirements */
 import '../css/GooglePopup.css';
 
+/* Dev-Config */
+const config = require('../config/dev_config.json');
+
 /* Internal JavaScript */
 const isSignedIn = require('../js/isSignedIn');
 
@@ -13,7 +16,7 @@ const GooglePopup = ({user, logout, closePopup}) => {
     return (
         <div id="googleLoginPopupBG">
             <div id="g_id_onload"
-                data-client_id="638170868686-s9ri19j5lsmfktec8s5pk6orveom1th6.apps.googleusercontent.com"
+                data-client_id={config['GoogleClientID']}
                 data-context="use"
                 data-ux_mode="popup"
                 data-login_uri="http://localhost:5000/login"
@@ -31,6 +34,7 @@ const GooglePopup = ({user, logout, closePopup}) => {
                     : 
                     <div>
                         <h4 id='popupTitle'>Sign in with Google</h4>
+                        <h5 id='popupSubTitle'>Not showing up? Refresh the page</h5>
                         <div className="g_id_signin"
                             data-type="icon"
                             data-shape="square"

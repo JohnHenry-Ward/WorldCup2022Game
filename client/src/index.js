@@ -8,12 +8,15 @@ import App from './App';
 
 /* Other pages (routes) */
 import Account from './routes/Account';
+import League from './routes/League';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path='/' element={<App />} />
       <Route path='/account' element={<Account />} />
+      <Route path='/league/:id' element={<League />}>
+      </Route>
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

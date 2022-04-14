@@ -15,6 +15,7 @@ import './css/App.css';
 /* Internval JavaSript */
 const isSignedIn = require('./js/isSignedIn');
 const getCookies = require('./js/getCookies');
+const requests = require('./js/requests');
 
 const App = () => {
 
@@ -37,24 +38,11 @@ const App = () => {
     }
   }, [signIn]);
 
-  useEffect(() => {
+  useEffect(async () => {
     const userSignedIn = isSignedIn.isSignedIn();
     if (userSignedIn === true) {
-      //temp
-      setAllLeagues([
-        {
-          "leagueName": "league1",
-          "leagueID": "123"
-        },
-        {
-          "leagueName": "league2",
-          "leagueID": "345"
-        },
-        {
-          "leagueName": "league3",
-          "leagueID": "347"
-        }
-      ]);
+      const leagues = await requests.getLeagues(getCookies.getCookies()['id']);
+      setAllLeagues(leagues);
     } else {
       setAllLeagues([]);
     }

@@ -20,7 +20,7 @@ const Header = ({user}) => {
         <div>
             <GooglePopup user={user}/>
             <div className='header'>
-                <p className='headerTitle'>World Cup 2022</p>
+                <a href='/' className='headerTitle'>World Cup 2022</a>
                 <div className='accountInfo' onClick={openLoginModal}>
                     <img src={userIcon} className='userIcon' alt='Generic user account icon'></img>
                     <p className='userName'>{ user.length !== 0 ? user : 'Sign In' }</p>

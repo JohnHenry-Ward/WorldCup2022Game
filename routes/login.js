@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 
 /* Internal Requirements */
 const config = require('../config/dev_config.json');
+const Users = require('../models/Users');
 
 /* Local Variables */
 const router = express.Router();
@@ -27,12 +28,39 @@ router.use(cookieParser());
 router.post('/', async (req, res) => {
     verify(req.body.credential)
         .then(payload => {
-            const name = payload['given_name'];
+            // check if the user is in the DB
             const email = payload['email'];
-            const id = payload['jti'];
+            const name = payload['given_name'];
             res.cookie('signedIn', true);
             res.cookie('userName', name);
-            res.cookie('id', id);
+            res.cookie('id', email);
+
+            Users.find({ id: email }, (err, result) => {
+                if (err) {
+                    console.log('Error when finding user')
+                    console.log(err);
+                } else {
+                    if (result.length === 0) {
+                        const newUser = new Users({
+                            name: name,
+                            id: email,
+                            leagues: []
+                        });
+
+                        newUser.save((err, user) => {
+                            if (err) {
+                                console.log('Error adding user to database');
+                                console.log(err);
+                            } else {
+                                console.log('New user added successfully');
+                                console.log(user);
+                            }
+                        })
+                    } else {
+                        console.log('User has signed in before, no need to add to database');
+                    }
+                }
+            });
             res.redirect('http://localhost:3000/'); //better way to do this?
         })
         .catch(e => {

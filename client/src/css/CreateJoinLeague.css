@@ -43,3 +43,7 @@
     justify-content: space-evenly;
     text-align: center;
 }
+
+.createJoinBTN{
+    margin: 0.8em 0;
+}

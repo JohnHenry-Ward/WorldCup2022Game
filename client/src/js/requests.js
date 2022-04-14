@@ -40,4 +40,23 @@ const joinLeague = async (ID, password) => {
     });
 }
 
-export { createLeague, joinLeague }
+const getLeagues = async (ID) => {
+    ID = ID.replace('%40', '@');
+    return axios({
+        method: 'GET',
+        url: `/users/${ID}`
+    })
+    .then(res => res.data['leagues'])
+    .catch(error => console.log(error));
+}
+
+const getLeagueData = async (ID) => {
+    return axios({
+        method: 'GET',
+        url: `/leagues/${ID}`
+    })
+    .then(res => res.data)
+    .catch(error => console.log(error));
+}
+
+export { createLeague, joinLeague, getLeagues, getLeagueData }

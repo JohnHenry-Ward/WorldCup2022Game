@@ -15,7 +15,7 @@ const Leagues = ({allLeagues}) => {
                     ? <p className='noLeaguesFiller'>You have no leagues yet!</p>
                     : allLeagues.map(league => {
                         return (
-                            <League key={league.leagueID} league={league} />
+                            <League key={league.id} league={league} />
                         );
                     })
             }

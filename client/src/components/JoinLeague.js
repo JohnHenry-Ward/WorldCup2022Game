@@ -29,9 +29,9 @@ const JoinLeague = ({closePopup}) => {
                 <input type="text" name="leagueID" required onChange={(e) => setLeagueID(e.target.value)}></input>
                 <label htmlFor="leaguePassword">Password</label>
                 <input type="text" name="leaguePassword" required onChange={(e) => setLeaguePassword(e.target.value)}></input>
-                <input type="submit" value="Join!"></input>
+                <input type="submit" value="Join!" className='createJoinBTN'></input>
             </form>
-            <button className='closeCreatePopup' onClick={closePopup}>Cancel</button>
+            <button className='createJoinBTN' onClick={closePopup}>Cancel</button>
             </div>
         </div>
        

@@ -38,10 +38,12 @@ const CreateLeague = ({closePopup}) => {
                     <option value="4">4</option>
                     <option value="5">5</option>
                     <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
                 </select>
-                <input type="submit" value="Create!"></input>
+                <input type="submit" value="Create!" className='createJoinBTN'></input>
             </form>
-            <button className='closeCreatePopup' onClick={closePopup}>Cancel</button>
+            <button className='createJoinBTN' onClick={closePopup}>Cancel</button>
             </div>
         </div>
        

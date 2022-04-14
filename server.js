@@ -10,6 +10,7 @@ const config = require('./config/dev_config.json');
 const teams = require('./routes/teams');
 const leagues = require('./routes/leagues');
 const login = require('./routes/login');
+const users = require('./routes/users');
 
 /* Local variables */
 const app = express();
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/teams', teams);
 app.use('/leagues', leagues);
 app.use('/login', login);
+app.use('/users', users);
 
 /* Connect to MongoDB Database */
 mongoose.connect(config['mongoURI'], { useNewUrlParser : true }, (err, db) => {
@@ -30,6 +32,24 @@ mongoose.connect(config['mongoURI'], { useNewUrlParser : true }, (err, db) => {
     } else {
         console.log('Database connected');
     }
+});
+
+app.get('/test', (req, res) => {
+    const options = {
+        method: 'GET',
+        url: 'https://api-football-v1.p.rapidapi.com/v3/fixtures',
+        params: {league: '1', season: '2022'},
+        headers: {
+          'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
+          'X-RapidAPI-Key': 'e3dae28dfemshc093bd1791048cdp16a123jsnfa7bf7f3d384'
+        }
+      };
+      
+    axios.request(options).then(function (response) {
+        res.send(response.data);
+    }).catch(function (error) {
+        res.send(error);
+    });
 });
 
 /* Start the server */
