@@ -15,7 +15,6 @@ const League = () => {
     const leagueID = useParams().id;
 
     /* Use States */
-    const [user, setUser] = useState(getCookies.getCookies()['userName']);
     const [leagueData, setLeagueData] = useState({ });
     const [players, setPlayers] = useState([]); // need a seperate var to the players array for some reason
 
@@ -28,31 +27,16 @@ const League = () => {
 
     return (
         <main>
-            <Header user={user}/>
+            <Header user={getCookies.getCookies()['userName']}/>
             <h3>League Name: {leagueData.name}</h3>
-            
-            <Standings players={players} />
-            
-            
-            {/* <div>
-                {
-                    players.map(p => {
-                        return (
-                            <div key={p.playerID}>
-                                <p>{p.playerName}</p>
-                                {
-                                    p.teamsID.map(t => {
-                                        return (
-                                            <p key={t}>{t}</p>
-                                        );
-                                    })
-                                }
-                            </div>
-                        );
-                    })
-                }
-            </div> */}
-            
+            <h4>League ID: {leagueData.leagueID}</h4>
+            <h4>League Password: {leagueData.password}</h4>
+            {
+                ! leagueData.hasDrafted ?
+                <Standings players={players} />
+                :
+                <h1>This league has not drafted</h1>
+            }
             
         </main>
     );

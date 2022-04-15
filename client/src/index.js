@@ -15,8 +15,7 @@ ReactDOM.render(
     <Routes>
       <Route path='/' element={<App />} />
       <Route path='/account' element={<Account />} />
-      <Route path='/league/:id' element={<League />}>
-      </Route>
+      <Route path='/league/:id' element={<League />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

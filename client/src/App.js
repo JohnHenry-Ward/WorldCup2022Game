@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Leagues from './components/Leagues';
 import Button from './components/Button';
-import GooglePopup from './components/GooglePopup';
 import CreateLeague from './components/CreateLeague';
 import JoinLeague from './components/JoinLeague';
 
@@ -16,6 +15,7 @@ import './css/App.css';
 const isSignedIn = require('./js/isSignedIn');
 const getCookies = require('./js/getCookies');
 const requests = require('./js/requests');
+const popup = require('./js/popup');
 
 const App = () => {
 
@@ -30,7 +30,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (signIn === true) {
+    const userSignedIn = isSignedIn.isSignedIn();
+    if (userSignedIn === true) {
       const cookies = getCookies.getCookies();
       setUser(cookies['userName']);
     } else {
@@ -47,53 +48,28 @@ const App = () => {
       setAllLeagues([]);
     }
   }, [signIn]);
-
-  /* Helper functions */
-
-  const closePopup = (target) => {
-    const popup = document.querySelector(target);
-    popup.style.display = 'None';
-  }
-
-  const logout = () => { //incomplete
-    getCookies.clearCookies();
-    setSignIn(false);
-    closePopup('#googleLoginPopupBG');
-  }
-
-  const openCreateLeaguePopup = () => {
-    if (isSignedIn.isSignedIn()) {
-      const popup = document.querySelector('#createPopup');
-      popup.style.display = 'flex';
-    } else {
-      //will add a popup window
-      console.log('You must be signed in to create a league');
-    }
-  }
-
-  const openJoinLeaguePopup = () => {
-    if (isSignedIn.isSignedIn()) {
-      const popup = document.querySelector('#joinPopup');
-      popup.style.display = 'flex';
-    } else {
-      //will add a popup window
-      console.log('You must be signed in to join a league');
-    }
-  }
   
   return (
     <div className="App">
-      <GooglePopup user={user} logout={logout} closePopup={(e) => closePopup('#googleLoginPopupBG')}/>
-      <CreateLeague closePopup={(e) => closePopup('#createPopup')}/>
-      <JoinLeague closePopup={(e) => closePopup('#joinPopup')} />
-      <Header user={user}/>
+      <CreateLeague closePopup={(e) => popup.closePopup('#createPopup')}/>
+      <JoinLeague closePopup={(e) => popup.closePopup('#joinPopup')} />
+      <Header user={user} setSignIn={setSignIn}/>
       <div className='liveScoreboard'> livescores{/*maybe a widget*/}</div>
       <div className='leagueBtnWrapper'>
-        <Button text='Create A League' className='leagueCreateJoinBTN' onClick={openCreateLeaguePopup}/>
-        <Button text='Join A League' className='leagueCreateJoinBTN' onClick={openJoinLeaguePopup}/>
+        <Button text='Create A League' className='leagueCreateJoinBTN' onClick={(e) => popup.openPopup('#createPopup')}/>
+        <Button text='Join A League' className='leagueCreateJoinBTN' onClick={(e) => popup.openPopup('#joinPopup')}/>
       </div>
       <h4 className='leaguesTitle'>Your Leagues</h4>
       <Leagues allLeagues={allLeagues}/>
+
+      {/* maybe move all popups to its own component? */}
+      <div className='popupBG' id='joinError'>
+        <div className='content'>
+          <h1 className='text'></h1>
+          <button className='createJoinBTN' onClick={(e) => popup.closePopup('#joinError')}>Cancel</button>
+        </div>
+      </div>
+
     </div>
   );
 }

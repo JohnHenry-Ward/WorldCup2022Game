@@ -1,14 +1,16 @@
 /* Libraries */
 const axios = require('axios');
 
-const createLeague = async (name, password, count) => {
+/* Internal Requirements */
+const popup = require('./popup');
+
+const createLeague = async (name, password) => {
     axios({
         method: 'POST',
         url: '/leagues/create',
         data: {
             leagueName: name,
-            leaguePassword: password,
-            numberOfPlayers: count
+            leaguePassword: password
         }
     })
     .then((res) => {
@@ -31,11 +33,14 @@ const joinLeague = async (ID, password) => {
         }
     })
     .then((res) => {
-        console.log('SUCCESS');
-        console.log(res);
+        if (res.data.status === 'error') {
+            popup.openPopup('#joinError');
+            document.querySelector('#joinError .text').innerHTML = res.data.msg;
+            console.log(res.data.msg);
+        }
     })
     .catch((error) => {
-        console.log('FAILURE');
+        console.log('Request failed');
         console.log(error);
     });
 }

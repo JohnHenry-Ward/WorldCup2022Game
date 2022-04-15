@@ -2,13 +2,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-/* Other Components */
-import Button from './Button';
-
 /* Interal Requirements */
 import '../css/League.css';
 import soccerBallLogo from '../images/icons/soccerBall.svg';
-// const leagueGetter = require('../js/leagueGetter'); // this one must be the last one or else react complains
 
 const League = ({ league }) => {
     return (

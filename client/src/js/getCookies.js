@@ -14,7 +14,9 @@ const getCookies = () => {
 }
 
 const clearCookies = () => {
-    document.cookie = 'signedIn=false';
+    document.cookie = 'signedIn=; Max-Age=-9999999';
+    document.cookie = 'userName=; Max-Age=-9999999';
+    document.cookie = 'id=; Max-Age=-9999999';
     //need to set expiration of userName and id to expire immediatly
 }
 

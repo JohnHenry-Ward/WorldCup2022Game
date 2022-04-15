@@ -7,10 +7,9 @@ import Players from "./Players";
 /* Internal Requirements */
 import '../../css/leaguePage/standings.css';
 
-import soccerBallLogo from '../../images/flags/USA.png';
-
 const Standings = ({ players }) => {
 
+    /* tooltip stuff can be cleaned up/moved eventually */
     const allPlayers = Array.from(document.querySelectorAll('.player'));
     const allTooltips = Array.from(document.querySelectorAll('.flags-tooltip'));
     const tooltips = {};
@@ -39,6 +38,7 @@ const Standings = ({ players }) => {
             t.style.display = 'none';
         }
     });
+    /* end of tooltip stuff */
 
     return (
         <div>
@@ -49,7 +49,7 @@ const Standings = ({ players }) => {
             {
                 players.map(p => {
                     return (
-                        <div className="flags-tooltip" id={'player-'+p.playerNumber+'-tooltip'}>
+                        <div className="flags-tooltip" id={'player-'+p.playerNumber+'-tooltip'} key={p.playerNumber}>
                            {
                                p.teamsID.map(t => {
                                    return (

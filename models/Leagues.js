@@ -5,10 +5,12 @@ const schema = mongoose.Schema({
    leagueID: String,
    password: String, //will have to be encrypted
    numberOfPlayers: Number,
+   hasDrafted: Boolean,
    players: [
        {
            playerName: String, 
-           playerID: String,   //encrpyed?
+           playerID: String,
+           playerNumber: Number,
            isCreator: Boolean,
            teamsID: [String]
        }

@@ -61,20 +61,21 @@ router.post('/create', async (req, res) => {
     const payload = req.body;
     const name = payload['leagueName'];
     const password = payload['leaguePassword'];
-    const numberOfPlayers = payload['numberOfPlayers'];
     const leagueID = uuid();
     // user is already logged in (checked client side)
     const cookies = req.cookies;
     const newPlayer = {
         playerName: cookies['userName'],
-        playerID: cookies['id']
+        playerID: cookies['id'],
+        isCreator: true,
+        playerNumber: 1
     };
 
     // create the league
     const newLeague = new Leagues({
         name,
         password,
-        numberOfPlayers,
+        numberOfPlayers: 1,
         leagueID,
         players: newPlayer
     });
@@ -82,16 +83,13 @@ router.post('/create', async (req, res) => {
     newLeague.save((err, league) => {
         if (err) {
             console.log('Error creating league');
-            console.log(err);
         } else {
             console.log('New League successfully created');
-            // console.log(league);
         }
     });
 
     // add the league to the users document
     const result = await Users.findOneAndUpdate({ 'id' : cookies['id'] }, { $push: { leagues: { id: leagueID, name: name } }});
-    console.log(result);
 
     res.redirect('/');
 });
@@ -107,37 +105,60 @@ router.post('/join', async (req, res) => {
     const leagueID = payload['leagueID'];
     const leaguePassword = payload['leaguePassword'];
     const cookies = req.cookies;
-    const newPlayer = {
-        playerName: cookies['userName'],
-        playerID: cookies['id'],
-        isCreator: false
-    };
 
-    // add user to the league
-    Leagues.findOneAndUpdate({leagueID, leaguePassword, 'players.playerID': {$ne: cookies['id']}}, 
-                             {$addToSet: {players: newPlayer}});
-
-
-    // add league to user (this can be cleaned up)
+    // find the league first
     Leagues.find({leagueID, leaguePassword}, (err, doc) => {
         if (err) {
-            console.log('Error adding league to user');
+            console.log('Error finding league');
         } else {
-            console.log('attempting to add league to user');
-            console.log(doc[0].name);
-            Users.findOneAndUpdate({'id' : cookies['id'], 'leagues.id': {$ne: leagueID}}, 
-                                    {$addToSet: { leagues: { id: leagueID, name: doc[0].name }}},
-                                    (err, doc) => {
-                                        if (err) {
-                                            console.log('Error adding league to user')
-                                        } else {
-                                            console.log('success!');
-                                        }
-                                    });
+            const currLeague = doc[0];
+            if (currLeague == null) {
+                console.log('This league does not exist');
+                res.json({
+                    'status': 'error',
+                    'msg': 'This league does not exist. Check the ID and password'
+                });
+            }
+            else if (currLeague.numberOfPlayers == 8) {
+                console.log('League already has max amount of players');
+                res.json({
+                    'status': 'error',
+                    'msg': 'This league already has the max amount of players (8)'
+                })
+            } else {
+                const newPlayer = {
+                    playerName: cookies['userName'],
+                    playerID: cookies['id'],
+                    playerNumber: currLeague.numberOfPlayers + 1,
+                    isCreator: false
+                };
+
+                // add user to the league
+                Leagues.findOneAndUpdate({leagueID, leaguePassword, 'players.playerID': {$ne: cookies['id']}}, 
+                                        {$inc: {numberOfPlayers: 1}, $addToSet: {players: newPlayer}},
+                                        (err, doc) => {
+                                            if (err) {
+                                                console.log('Error adding user to league');
+                                            } else {
+                                                console.log('User added to league!')
+                                            }
+                                        });
+
+                //add league to user
+                Users.findOneAndUpdate({'id' : cookies['id'], 'leagues.id': {$ne: leagueID}}, 
+                                        {$addToSet: { leagues: { id: leagueID, name: currLeague.name }}},
+                                        (err, doc) => {
+                                            if (err) {
+                                                console.log('Error adding league to user')
+                                            } else {
+                                                console.log('League added to user!');
+                                            }
+                                        });
+
+                res.redirect('/');
+            }
         }
     });
-
-    res.redirect('/');
 });
 
 module.exports = router;

@@ -46,4 +46,11 @@
 
 .createJoinBTN{
     margin: 0.8em 0;
+    align-self: center;
 }
+
+.text{
+    text-align: center;
+}
+
+/* this could be for all popups? */
