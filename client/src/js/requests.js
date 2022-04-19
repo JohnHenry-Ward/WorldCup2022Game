@@ -64,4 +64,13 @@ const getLeagueData = async (ID) => {
     .catch(error => console.log(error));
 }
 
-export { createLeague, joinLeague, getLeagues, getLeagueData }
+const getFixtures = async () => {
+    return axios({
+        method: 'GET',
+        url: '/api/fixtures'
+    })
+    .then(res => res.data.response)
+    .catch(error => console.log(error));
+}
+
+export { createLeague, joinLeague, getLeagues, getLeagueData, getFixtures }

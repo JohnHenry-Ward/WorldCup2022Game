@@ -5,10 +5,14 @@ import { useParams } from 'react-router-dom';
 /* Other Components */
 import Header from "../components/Header";
 import Standings from '../components/leaguePage/Standings';
+import Groups from '../components/leaguePage/Groups';
+import Schedule from '../components/leaguePage/Schedule';
 
 /* Internval JavaSript */
 const getCookies = require('../js/getCookies');
 const requests = require('../js/requests');
+
+import '../css/leaguePage/league.css';
 
 const League = () => {
     /* Routes Parameters */
@@ -31,12 +35,23 @@ const League = () => {
             <h3>League Name: {leagueData.name}</h3>
             <h4>League ID: {leagueData.leagueID}</h4>
             <h4>League Password: {leagueData.password}</h4>
-            {
-                ! leagueData.hasDrafted ?
-                <Standings players={players} />
-                :
-                <h1>This league has not drafted</h1>
-            }
+            <div className='main-content'>
+                
+                <div className='live-status'>
+                    <Schedule players={players} />
+                    <Groups />
+                </div>
+
+                <div className='standings'>
+                    {
+                        ! leagueData.hasDrafted ?
+                        <Standings players={players} />
+                        :
+                        <h1>This league has not drafted</h1>
+                    }
+                </div>
+                
+            </div>
             
         </main>
     );

@@ -11,7 +11,7 @@ const Players = ({ players }) => {
 
     return (
         <div className='player-scores'>
-            <h5 className="player-scores-title">Standings</h5>
+            <h5 className="section-title">Standings</h5>
             <table className="player-standings-table">
                 <tbody>
                     {

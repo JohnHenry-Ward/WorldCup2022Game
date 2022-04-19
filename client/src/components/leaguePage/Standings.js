@@ -53,7 +53,7 @@ const Standings = ({ players }) => {
                            {
                                p.teamsID.map(t => {
                                    return (
-                                       <img className="flag" src={require("../../images/flags/"+t+".png")} alt={t+' flag'} />
+                                       <img className="flag" src={require("../../images/flags/"+t+".png")} alt={t+' flag'} key={t}/>
                                     );
                                })
                            }

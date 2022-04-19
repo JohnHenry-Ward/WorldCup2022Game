@@ -1,0 +1,10 @@
+.main-content{
+    display: flex;
+    margin: 1vh 3vw;
+}
+
+.section-title{
+    text-align: center;
+    font-size: 1.5em;
+    margin: 1em 0;
+}
