@@ -1,24 +1,13 @@
 /* Libraries */
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 /* Other Components */
 import Fixture from './Fixture';
 
 /* Internal Requirements */
 import '../../css/leaguePage/schedule.css';
-const fixtures = require('../../config/fixtures.json').response; //strictly for testing
-const requests = require('../../js/requests');
 
-const Schedule = ({ players }) => {
-
-    /* Use State */
-    const [allFixtures, setFixtures] = useState([]);
-
-    useEffect(async () => {
-        // const fixtures = await requests.getFixtures();
-        setFixtures(fixtures);
-        // console.log(fixtures);
-    }, []);
+const Schedule = ({ players, fixtures }) => {
 
     return (
         <div className="schedule">
@@ -26,7 +15,7 @@ const Schedule = ({ players }) => {
             <div className="stage"> {/* will be group stage, knockout, etc */}
             <p className="stage-title">Group Stage</p>
             {
-                allFixtures.map((game) => {
+                fixtures.map((game) => {
                     return(
                         <Fixture key={game.fixture.id} game={game} players={players} />
                     );

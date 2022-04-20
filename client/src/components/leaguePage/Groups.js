@@ -7,7 +7,7 @@ import Group from './Group';
 /* Internal Requirements */
 import '../../css/leaguePage/groups.css';
 const g = require('../../config/groupStage.json').response[0]; // strictly for testing
-const requests = require('../../js/requests');
+// const requests = require('../../js/requests');
 
 const Groups = ({ players }) => {
 

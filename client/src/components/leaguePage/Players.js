@@ -1,13 +1,20 @@
 /* Libraries */
-import React from "react";
+import React, { useEffect } from "react";
 
 /* Other Components */
 import Player from "./Player";
 
 /* Internal Requirements */
+import { calculateScores } from "../../js/calculateScores";
 import '../../css/leaguePage/standings.css';
 
-const Players = ({ players }) => {
+const Players = ({ players, fixtures }) => {
+
+    useEffect(() => {
+        players = calculateScores(players, fixtures);
+    }, [players]);
+
+    let playerCount = 0;
 
     return (
         <div className='player-scores'>
@@ -16,8 +23,9 @@ const Players = ({ players }) => {
                 <tbody>
                     {
                         players.map(p => {
+                                playerCount += 1;
                                 return (
-                                    <Player key={p.playerID} player={p} />
+                                    <Player key={p.playerID} player={p} place={playerCount} />
                                 );
                             })
                     }
