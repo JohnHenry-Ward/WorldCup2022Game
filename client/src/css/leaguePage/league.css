@@ -8,3 +8,8 @@
     font-size: 1.5em;
     margin: 1em 0;
 }
+
+.live-status{
+    display: flex;
+    flex-direction: column;
+}

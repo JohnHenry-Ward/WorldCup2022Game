@@ -39,7 +39,7 @@ const League = () => {
                 
                 <div className='live-status'>
                     <Schedule players={players} />
-                    <Groups />
+                    <Groups players={players} />
                 </div>
 
                 <div className='standings'>

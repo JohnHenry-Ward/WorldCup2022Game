@@ -4,7 +4,6 @@ const axios = require('axios');
 
 /* Internal Requirements */
 const config = require('../../config/dev_config.json');
-const { stringify } = require('uuid');
 
 /* Local Variables */
 const router = express.Router();

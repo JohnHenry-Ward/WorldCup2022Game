@@ -12,6 +12,7 @@ const leagues = require('./routes/leagues');
 const login = require('./routes/login');
 const users = require('./routes/users');
 const fixtures = require('./routes/api/fixtures');
+const groupStage = require('./routes/api/groupStage');
 
 /* Local variables */
 const app = express();
@@ -26,6 +27,7 @@ app.use('/leagues', leagues);
 app.use('/login', login);
 app.use('/users', users);
 app.use('/api/fixtures', fixtures);
+app.use('/api/groupStage', groupStage);
 
 /* Connect to MongoDB Database */
 mongoose.connect(config['mongoURI'], { useNewUrlParser : true }, (err, db) => {

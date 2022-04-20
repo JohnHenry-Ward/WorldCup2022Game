@@ -73,4 +73,13 @@ const getFixtures = async () => {
     .catch(error => console.log(error));
 }
 
-export { createLeague, joinLeague, getLeagues, getLeagueData, getFixtures }
+const getGroupStage = async () => {
+    return axios({
+        method: 'GET',
+        url: '/api/groupStage'
+    })
+    .then(res => res.data.response)
+    .catch(error => console.log(error));
+}
+
+export { createLeague, joinLeague, getLeagues, getLeagueData, getFixtures, getGroupStage }
