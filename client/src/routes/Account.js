@@ -1,5 +1,5 @@
 /* Requirements */
-import React, { useState } from 'react';
+import React from 'react';
 
 /* Other Components */
 import Header from "../components/Header";

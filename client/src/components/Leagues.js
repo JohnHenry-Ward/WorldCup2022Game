@@ -7,7 +7,7 @@ import League from './League';
 /* Interal Requirements */
 import '../css/League.css';
 
-const Leagues = ({allLeagues}) => {
+const Leagues = ({ allLeagues }) => {
     return (
         <div className='leagues'>
             {

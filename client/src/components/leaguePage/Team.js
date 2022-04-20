@@ -9,15 +9,12 @@ const teamCodes = require('../../config/teamCodes').teamCodes;
 
 const Team = ({ team, players }) => {
     const teamCode = teamCodes[team.team.name];
-
     const teamToPlayer = {};
-    let counter = 1;
 
     players.forEach(p => {
         p.teamsID.forEach(t => {
-            teamToPlayer[t] = counter;
+            teamToPlayer[t] = p.playerNumber;
         });
-        counter++;
     });
 
     const playerNum = teamToPlayer[teamCode];

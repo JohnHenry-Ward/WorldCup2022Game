@@ -12,6 +12,7 @@ import Schedule from '../components/leaguePage/Schedule';
 const getCookies = require('../js/getCookies');
 const requests = require('../js/requests');
 const fixtures = require('../config/fixtures_2018.json').response; //strictly for testing
+const g = require('../config/groupStage.json').response[0]; // strictly for testing
 import '../css/leaguePage/league.css';
 
 const League = () => {
@@ -22,12 +23,18 @@ const League = () => {
     const [leagueData, setLeagueData] = useState({ });
     const [players, setPlayers] = useState([]); // need a seperate var to the players array for some reason
     const [allFixtures, setFixtures] = useState([]);
+    const [allGroups, setGroups] = useState([]);
     
     /* Use Effects */
     useEffect(async () => {
         // const fixtures = await requests.getFixtures();
         setFixtures(fixtures);
         // console.log(fixtures);
+    }, []);
+
+    useEffect(async () => {
+        // const g = await requests.getGroupStage();
+        setGroups(g.league.standings);
     }, []);
 
     
@@ -54,8 +61,8 @@ const League = () => {
             <div className='main-content'>
                 
                 <div className='live-status'>
-                    <Schedule players={players} fixtures={allFixtures} />
-                    <Groups players={players} />
+                    <Schedule players={players} fixtures={allFixtures} groups={allGroups} />
+                    <Groups players={players} groups={allGroups} />
                 </div>
 
                 <div className='standings'>

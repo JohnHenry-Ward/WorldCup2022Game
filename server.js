@@ -38,24 +38,6 @@ mongoose.connect(config['mongoURI'], { useNewUrlParser : true }, (err, db) => {
     }
 });
 
-app.get('/test', (req, res) => {
-    const options = {
-        method: 'GET',
-        url: 'https://api-football-v1.p.rapidapi.com/v3/fixtures',
-        params: {league: '1', season: '2022'},
-        headers: {
-          'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-          'X-RapidAPI-Key': 'e3dae28dfemshc093bd1791048cdp16a123jsnfa7bf7f3d384'
-        }
-      };
-      
-    axios.request(options).then(function (response) {
-        res.send(response.data);
-    }).catch(function (error) {
-        res.send(error);
-    });
-});
-
 /* Start the server */
 app.listen(PORT, () => {
     console.log(`Backend running on port ${PORT}`);

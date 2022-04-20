@@ -7,7 +7,7 @@ import React from "react";
 import '../../css/leaguePage/schedule.css';
 const teamCodes = require('../../config/teamCodes').teamCodes;
 
-const Fixture = ({ game, players }) => {
+const Fixture = ({ game, players, groups }) => {
     const homeTeamCode = teamCodes[game.teams.home.name];
     const awayTeamCode = teamCodes[game.teams.away.name];
     const status = game.fixture.status.short;
@@ -17,13 +17,11 @@ const Fixture = ({ game, players }) => {
     const date = months[d.getMonth()] + ' ' + d.getDate() + ' ' + d.toLocaleTimeString([], {timeStyle: 'short'});
 
     const teamToPlayer = {};
-    let counter = 1;
 
     players.forEach(p => {
         p.teamsID.forEach(t => {
-            teamToPlayer[t] = counter;
+            teamToPlayer[t] = p.playerNumber;
         });
-        counter++;
     });
 
     const playerHome = teamToPlayer[homeTeamCode];
@@ -54,7 +52,10 @@ const Fixture = ({ game, players }) => {
                         status === 'NS' ?
                         date
                         :
-                        'LIVE'
+                        status === 'PEN' ?
+                        status + ' (' + game.score.penalty.home + '-' + game.score.penalty.away + ')'
+                        :
+                        status
                     }
                     </p>
             </div>

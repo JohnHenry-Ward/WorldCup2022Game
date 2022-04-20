@@ -45,12 +45,15 @@
     flex-direction: row;
     justify-content: space-evenly;
     width: 40%;
-    /* border: 1px solid red; */
+    font-size: 1.5em;
+}
+
+.leagueInfo > p {
+    margin: auto;
 }
 
 .leagueGoToBTN{
     background-color: var(--yellow);
-    /* margin-right: 5%; */
     padding: 1em;
     border: 0;
     border-radius: 15px;

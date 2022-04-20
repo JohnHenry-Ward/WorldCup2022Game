@@ -60,7 +60,7 @@ const App = () => {
         <Button text='Join A League' className='leagueCreateJoinBTN' onClick={(e) => popup.openPopup('#joinPopup')}/>
       </div>
       <h4 className='leaguesTitle'>Your Leagues</h4>
-      <Leagues allLeagues={allLeagues}/>
+      <Leagues allLeagues={allLeagues} />
 
       {/* maybe move all popups to its own component? */}
       <div className='popupBG' id='joinError'>

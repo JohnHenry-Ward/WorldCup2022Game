@@ -7,13 +7,12 @@ import '../css/League.css';
 import soccerBallLogo from '../images/icons/soccerBall.svg';
 
 const League = ({ league }) => {
+
     return (
         <div className='league'>
             <img src={soccerBallLogo} className='leagueLogo' alt='soccer ball icon'></img>
             <div className='leagueInfo'>
                 <p>{league.name}</p>
-                <p>~points~</p>
-                <p>~position~</p>  
             </div>
             <NavLink to={`/league/${league.id}`} className='leagueGoToBTN'>Go To League</NavLink>
         </div>

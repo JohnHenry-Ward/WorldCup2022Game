@@ -1,32 +1,23 @@
 /* Libraries */
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 /* Other Components */
 import Group from './Group';
 
 /* Internal Requirements */
 import '../../css/leaguePage/groups.css';
-const g = require('../../config/groupStage.json').response[0]; // strictly for testing
-// const requests = require('../../js/requests');
+import { toggleLeagueSection } from "../../js/animation";
 
-const Groups = ({ players }) => {
-
-    /* Use State */
-    const [allGroups, setGroups] = useState([]);
-
-    useEffect(async () => {
-        // const g = await requests.getGroupStage();
-        setGroups(g.league.standings);
-    }, []);
+const Groups = ({ players, groups }) => {
 
     let groupCounter = 0;
 
     return (
         <div className="group-stage-wrapper">
-            <h1 className="section-title">Group Standings</h1>
+            <h1 className="section-title" onClick={(e) => toggleLeagueSection('.group-stage')}>Group Standings</h1>
             <div className="group-stage">
             {
-                allGroups.map((group) => {
+                groups.map((group) => {
                     groupCounter++;
                     return (
                         <Group group={group} players={players} key={groupCounter}/>
