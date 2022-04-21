@@ -49,12 +49,12 @@ const Schedule = ({ players, fixtures, groups }) => {
                 return f.league.round === 'Final';
             }));
 
-
             setIsSorted(true)
         }
     }, [fixtures]);
 
     let allFixtures = [groupStage, roundOf16, quarters, semis, thirdPlace, final];
+    let gameNumber = 0;
 
     return (
         <div className="schedule">
@@ -65,57 +65,75 @@ const Schedule = ({ players, fixtures, groups }) => {
             <div className="stage">
             <p className="stage-title">Group Stage</p>
             {
-                isSorted &&
+                (isSorted && groupStage.length !== 0) ?
                 groupStage.map((game) => {
+                    gameNumber++;
                     return(
-                        <Fixture key={game.fixture.id} game={game} players={players} />
+                        <Fixture key={game.fixture.id} game={game} players={players} gameNumber={gameNumber} />
                     );
                 })
+                :
+                'Games TDB'
             }
             <p className="stage-title">Round of 16</p>
             {
-                isSorted &&
+                (isSorted && roundOf16.length !== 0) ?
                 roundOf16.map((game) => {
+                    gameNumber++;
                     return(
-                        <Fixture key={game.fixture.id} game={game} players={players} />
+                        <Fixture key={game.fixture.id} game={game} players={players} gameNumber={gameNumber} />
                     );
                 })
+                :
+                'Games TDB'
             }
             <p className="stage-title">Quarter Finals</p>
             {
-                isSorted &&
+                (isSorted && quarters.length !== 0) ?
                 quarters.map((game) => {
+                    gameNumber++;
                     return(
-                        <Fixture key={game.fixture.id} game={game} players={players} />
+                        <Fixture key={game.fixture.id} game={game} players={players} gameNumber={gameNumber} />
                     );
                 })
+                :
+                'Games TDB'
             }
             <p className="stage-title">Semi Finals</p>
             {
-                isSorted &&
+                (isSorted && semis.length !== 0) ?
                 semis.map((game) => {
+                    gameNumber++;
                     return(
-                        <Fixture key={game.fixture.id} game={game} players={players} />
+                        <Fixture key={game.fixture.id} game={game} players={players} gameNumber={gameNumber} />
                     );
                 })
+                :
+                'Games TDB'
             }
             <p className="stage-title">Third Place Game</p>
             {
-                isSorted &&
+                (isSorted && thirdPlace.length !== 0) ?
                 thirdPlace.map((game) => {
+                    gameNumber++;
                     return(
-                        <Fixture key={game.fixture.id} game={game} players={players} />
+                        <Fixture key={game.fixture.id} game={game} players={players} gameNumber={gameNumber} />
                     );
                 })
+                :
+                'Game TDB'
             }
             <p className="stage-title">Final</p>
             {
-                isSorted &&
+                (isSorted && final.length !== 0) ?
                 final.map((game) => {
+                    gameNumber++;
                     return(
-                        <Fixture key={game.fixture.id} game={game} players={players} />
+                        <Fixture key={game.fixture.id} game={game} players={players} gameNumber={gameNumber} />
                     );
                 })
+                :
+                'Game TDB'
             }
             </div>
         </div>

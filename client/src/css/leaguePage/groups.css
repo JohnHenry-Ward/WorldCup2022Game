@@ -84,6 +84,10 @@ td{
     background-color: var(--player-4-color);
 }
 
+#player-circle-p9{
+    background-color: var(--player-9-color);
+}
+
 .team-flag{
     width: 2.5em;
     height: 1.7em;

@@ -11,7 +11,7 @@ import Schedule from '../components/leaguePage/Schedule';
 /* Internal Requirements */
 const getCookies = require('../js/getCookies');
 const requests = require('../js/requests');
-const fixtures = require('../config/fixtures_2018.json').response; //strictly for testing
+const fixtures = require('../config/fixtures.json').response; //strictly for testing
 const g = require('../config/groupStage.json').response[0]; // strictly for testing
 import '../css/leaguePage/league.css';
 

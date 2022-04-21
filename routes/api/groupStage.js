@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
         url: 'https://api-football-v1.p.rapidapi.com/v3/standings',
         params: {
             league: 1,
-            season: 2018
+            season: 2022
         },
         headers: {
             'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',

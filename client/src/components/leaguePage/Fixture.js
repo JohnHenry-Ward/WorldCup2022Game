@@ -7,7 +7,7 @@ import React from "react";
 import '../../css/leaguePage/schedule.css';
 const teamCodes = require('../../config/teamCodes').teamCodes;
 
-const Fixture = ({ game, players, groups }) => {
+const Fixture = ({ game, players, groups, gameNumber }) => {
     const homeTeamCode = teamCodes[game.teams.home.name];
     const awayTeamCode = teamCodes[game.teams.away.name];
     const status = game.fixture.status.short;
@@ -24,12 +24,12 @@ const Fixture = ({ game, players, groups }) => {
         });
     });
 
-    const playerHome = teamToPlayer[homeTeamCode];
-    const playerAway = teamToPlayer[awayTeamCode];
+    const playerHome = teamToPlayer[homeTeamCode] || 9;
+    const playerAway = teamToPlayer[awayTeamCode] || 9;
 
     return (
         <div className="fixture-wrapper">
-            <div className="fixture">
+            <div className="fixture" title={'Game ' + gameNumber}>
                 <div className="team" id="home">
                     <div className="player-circle" id={"player-circle-p"+playerHome}></div> {/* will have to figure out what player this team belongs to */}
                     <p className="team-name">{game.teams.home.name}</p>
