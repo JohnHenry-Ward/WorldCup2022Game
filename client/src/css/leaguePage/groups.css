@@ -29,7 +29,7 @@
     padding: 0.2em;
     border-spacing: 0 5px;
     margin: auto;
-    width: 18vw;
+    max-width: 18vw;
 }
 
 .group-header > tr > td {
@@ -48,6 +48,7 @@ tr > td > * {
 td{
     text-align: center;
     padding: 0 0.4em; /* MAYBE CHANGE THIS FOR EACH ELEMENT */
+    text-overflow: ellipsis;
 }
 
 .group-header{
