@@ -69,7 +69,7 @@ const getFixtures = async () => {
         method: 'GET',
         url: '/api/fixtures'
     })
-    .then(res => res.data.response)
+    .then(res => res.data)
     .catch(error => console.log(error));
 }
 
@@ -78,7 +78,7 @@ const getGroupStage = async () => {
         method: 'GET',
         url: '/api/groupStage'
     })
-    .then(res => res.data.response)
+    .then(res => res.data)
     .catch(error => console.log(error));
 }
 

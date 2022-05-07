@@ -6,6 +6,10 @@ const schema = mongoose.Schema({
    password: String, //will have to be encrypted
    numberOfPlayers: Number,
    hasDrafted: Boolean,
+   draftDate: {
+       type: Date,
+       default: null
+   },
    players: [
        {
            playerName: String, 

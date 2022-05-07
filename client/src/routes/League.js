@@ -1,6 +1,6 @@
 /* Requirements */
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 
 /* Other Components */
 import Header from "../components/Header";
@@ -11,8 +11,6 @@ import Schedule from '../components/leaguePage/Schedule';
 /* Internal Requirements */
 const getCookies = require('../js/getCookies');
 const requests = require('../js/requests');
-const fixtures = require('../config/fixtures.json').response; //strictly for testing
-const g = require('../config/groupStage.json').response[0]; // strictly for testing
 import '../css/leaguePage/league.css';
 
 const League = () => {
@@ -26,18 +24,20 @@ const League = () => {
     const [allGroups, setGroups] = useState([]);
     
     /* Use Effects */
+
+    /* Get Fixtures */
     useEffect(async () => {
-        // const fixtures = await requests.getFixtures();
-        setFixtures(fixtures);
-        // console.log(fixtures);
+        const fixtures = await requests.getFixtures();
+        setFixtures(JSON.parse(fixtures));
     }, []);
 
+    /* Get Group Stage */
     useEffect(async () => {
-        // const g = await requests.getGroupStage();
-        setGroups(g.league.standings);
+        const g = await requests.getGroupStage();
+        setGroups(JSON.parse(g)[0].league.standings);
     }, []);
 
-    
+    /* Get League Data */
     useEffect(async () => {
         const response = await requests.getLeagueData(leagueID);
         setPlayers(response.players);
@@ -47,17 +47,15 @@ const League = () => {
     return (
         <main>
             <Header user={getCookies.getCookies()['userName']}/>
-            <h3>League Name: {leagueData.name}</h3>
-            <h4>League ID: {leagueData.leagueID}</h4>
-            <h4>League Password: {leagueData.password}</h4>
-            <p>
-                GS W: 3 <br></br>
-                GS T: 1 <br></br>
-                16 W: 4 <br></br>
-                QT W: 6 <br></br>
-                SF W: 8 <br></br>
-                FN W: 12 <br></br>
-            </p>
+            <div className='league-header'>
+                <h3>League Name: {leagueData.name}</h3>
+                <h4>League ID: {leagueData.leagueID}</h4>
+                <h4>League Password: {leagueData.password}</h4>
+                {
+                    ! leagueData.hasDrafted &&
+                    <NavLink to={`/draft/${leagueID}`} className='draftGoToBtn'>Go To Draft</NavLink>
+                }
+            </div>
             <div className='main-content'>
                 
                 <div className='live-status'>
@@ -66,12 +64,7 @@ const League = () => {
                 </div>
 
                 <div className='standings'>
-                    {
-                        ! leagueData.hasDrafted ?
-                        <Standings players={players} fixtures={allFixtures}/>
-                        :
-                        <h1>This league has not drafted</h1>
-                    }
+                    <Standings players={players} fixtures={allFixtures}/>
                 </div>
                 
             </div>
