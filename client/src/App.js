@@ -16,6 +16,7 @@ const isSignedIn = require('./js/isSignedIn');
 const getCookies = require('./js/getCookies');
 const requests = require('./js/requests');
 const popup = require('./js/popup');
+const countdown = require('./js/countdown');
 
 const App = () => {
 
@@ -23,6 +24,7 @@ const App = () => {
   const [allLeagues, setAllLeagues] = useState([]);
   const [user, setUser] = useState('');
   const [signIn, setSignIn] = useState(false);
+  const [timeTilKick, setTimeTilKick] = useState(countdown.countdown());
 
   /* Use Effects */
   useEffect(() => {
@@ -48,12 +50,28 @@ const App = () => {
       setAllLeagues([]);
     }
   }, [signIn]);
+
+  // Countdown timer
+  setInterval(() => {
+    let ret = countdown.countdown();
+    setTimeTilKick(ret);
+  }, 1000);
   
   return (
     <div className="App">
       <CreateLeague closePopup={(e) => popup.closePopup('#createPopup')}/>
       <JoinLeague closePopup={(e) => popup.closePopup('#joinPopup')} />
       <Header user={user} setSignIn={setSignIn}/>
+      <div className='countdown-wrapper'>
+        <div className='countdown'>
+          <p className='time'>{timeTilKick['days']} <span className='type'>Days</span></p>
+          <p className='time'>{timeTilKick['hours']} <span className='type'>Hours</span></p>
+          <p className='time'>{timeTilKick['minutes']} <span className='type'>Minutes</span></p>
+          <p className='time'>{timeTilKick['seconds']} <span className='type'>Seconds</span></p>
+        </div>
+        <p className='subtitle'>Until Kickoff!</p>
+      </div>
+      
       <div className='liveScoreboard'> livescores{/*maybe a widget*/}</div>
       <div className='leagueBtnWrapper'>
         <Button text='Create A League' className='leagueCreateJoinBTN' onClick={(e) => popup.openPopup('#createPopup')}/>
