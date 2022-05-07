@@ -1,0 +1,52 @@
+.groups-and-order{
+    border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+}
+
+.groups-wrapper{
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+}
+
+.group-table{
+    width: 80%;
+}
+
+.groups{
+    border: 1px solid green;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.confirm-btn{
+    padding: 1em;
+    border: 1px solid pink;
+}
+
+.team-selectable:hover{
+    cursor: pointer;
+}
+
+.order-wrapper{
+    border: 1px solid cyan;
+    width: 20vw;
+    margin: auto;
+}
+
+.picks-tracker{
+    width: 90vw;
+    height: 20vh;
+    margin: auto;
+    border: 1px solid orange;
+}
+
+td.left-round{
+    margin: 0;
+}
+
+.team-name-td{
+    width: 50%;
+}
