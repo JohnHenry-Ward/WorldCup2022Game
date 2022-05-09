@@ -61,6 +61,7 @@ router.post('/create', async (req, res) => {
     const payload = req.body;
     const name = payload['leagueName'];
     const password = payload['leaguePassword'];
+    const draftDate = payload['draftDate'];
     const leagueID = uuid();
     // user is already logged in (checked client side)
     const cookies = req.cookies;
@@ -77,7 +78,8 @@ router.post('/create', async (req, res) => {
         password,
         numberOfPlayers: 1,
         leagueID,
-        players: newPlayer
+        players: newPlayer,
+        draftDate: draftDate
     });
 
     newLeague.save((err, league) => {

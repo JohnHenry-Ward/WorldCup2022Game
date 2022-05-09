@@ -20,8 +20,10 @@ const League = () => {
     /* Use States */
     const [leagueData, setLeagueData] = useState({ });
     const [players, setPlayers] = useState([]); // need a seperate var to the players array for some reason
+    const [draftDate, setDraftDate] = useState({ });
     const [allFixtures, setFixtures] = useState([]);
     const [allGroups, setGroups] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     
     /* Use Effects */
 
@@ -42,6 +44,8 @@ const League = () => {
         const response = await requests.getLeagueData(leagueID);
         setPlayers(response.players);
         setLeagueData(response);
+        setDraftDate(new Date(response.draftDate));
+        setIsLoading(false);
     }, []);
 
     return (
@@ -51,6 +55,11 @@ const League = () => {
                 <h3>League Name: {leagueData.name}</h3>
                 <h4>League ID: {leagueData.leagueID}</h4>
                 <h4>League Password: {leagueData.password}</h4>
+                <h4>Draft Day: {
+                        ! isLoading &&
+                        draftDate.toDateString() + ' ' + draftDate.toLocaleTimeString()
+                    }
+                </h4>
                 {
                     ! leagueData.hasDrafted &&
                     <NavLink to={`/draft/${leagueID}`} className='draftGoToBtn'>Go To Draft</NavLink>

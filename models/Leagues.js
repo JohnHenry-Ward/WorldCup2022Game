@@ -5,7 +5,10 @@ const schema = mongoose.Schema({
    leagueID: String,
    password: String, //will have to be encrypted
    numberOfPlayers: Number,
-   hasDrafted: Boolean,
+   hasDrafted: {
+       type: Boolean,
+       default: null
+   },
    draftDate: {
        type: Date,
        default: null
