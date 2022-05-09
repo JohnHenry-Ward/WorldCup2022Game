@@ -1,12 +1,11 @@
-const countdown = () => {
+const countdown = (countingTo) => {
     const _second = 1000;
     const _minute = _second * 60;
     const _hour   = _minute * 60;
     const _day    = _hour * 24;
 
-    const kickoff = new Date("2022-11-21T10:00:00+00:00");
     const now = new Date();
-    const distance = kickoff - now;
+    const distance = countingTo - now;
 
     if (distance < 0) {
         console.log('EXPIRED');

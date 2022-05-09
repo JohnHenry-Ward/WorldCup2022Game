@@ -7,6 +7,7 @@ import Leagues from './components/Leagues';
 import Button from './components/Button';
 import CreateLeague from './components/CreateLeague';
 import JoinLeague from './components/JoinLeague';
+import Timer from './components/Timer';
 
 /* Internal Requirements */
 import './css/App.css';
@@ -24,7 +25,7 @@ const App = () => {
   const [allLeagues, setAllLeagues] = useState([]);
   const [user, setUser] = useState('');
   const [signIn, setSignIn] = useState(false);
-  const [timeTilKick, setTimeTilKick] = useState(countdown.countdown());
+  const [timeTilKick, setTimeTilKick] = useState(countdown.countdown(new Date("2022-11-21T10:00:00+00:00")));
 
   /* Use Effects */
   useEffect(() => {
@@ -53,7 +54,7 @@ const App = () => {
 
   // Countdown timer
   setInterval(() => {
-    let ret = countdown.countdown();
+    let ret = countdown.countdown(new Date("2022-11-21T10:00:00+00:00"));
     setTimeTilKick(ret);
   }, 1000);
   
@@ -62,15 +63,7 @@ const App = () => {
       <CreateLeague closePopup={(e) => popup.closePopup('#createPopup')}/>
       <JoinLeague closePopup={(e) => popup.closePopup('#joinPopup')} />
       <Header user={user} setSignIn={setSignIn}/>
-      <div className='countdown-wrapper'>
-        <div className='countdown'>
-          <p className='time'>{timeTilKick['days']} <span className='type'>Days</span></p>
-          <p className='time'>{timeTilKick['hours']} <span className='type'>Hours</span></p>
-          <p className='time'>{timeTilKick['minutes']} <span className='type'>Minutes</span></p>
-          <p className='time'>{timeTilKick['seconds']} <span className='type'>Seconds</span></p>
-        </div>
-        <p className='subtitle'>Until Kickoff!</p>
-      </div>
+      <Timer countingTo={new Date("2022-11-21T10:00:00+00:00")} text={'Until Kickoff!'} />
       
       <div className='liveScoreboard'> livescores{/*maybe a widget*/}</div>
       <div className='leagueBtnWrapper'>

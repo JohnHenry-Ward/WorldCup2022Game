@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Standings from '../components/leaguePage/Standings';
 import Groups from '../components/leaguePage/Groups';
 import Schedule from '../components/leaguePage/Schedule';
+import Timer from '../components/Timer';
 
 /* Internal Requirements */
 const getCookies = require('../js/getCookies');
@@ -55,14 +56,20 @@ const League = () => {
                 <h3>League Name: {leagueData.name}</h3>
                 <h4>League ID: {leagueData.leagueID}</h4>
                 <h4>League Password: {leagueData.password}</h4>
+                {/* this stuff will be cleaned up and formatted better */}
                 <h4>Draft Day: {
                         ! isLoading &&
                         draftDate.toDateString() + ' ' + draftDate.toLocaleTimeString()
                     }
                 </h4>
                 {
-                    ! leagueData.hasDrafted &&
-                    <NavLink to={`/draft/${leagueID}`} className='draftGoToBtn'>Go To Draft</NavLink>
+                    ! isLoading ?
+                        leagueData.hasDrafted ?
+                        <NavLink to={`/draft/${leagueID}`} className='draftGoToBtn'>Go To Draft</NavLink>
+                        :
+                        <Timer countingTo={draftDate} text={'Until Draft!'} />
+                    :
+                    ''
                 }
             </div>
             <div className='main-content'>
