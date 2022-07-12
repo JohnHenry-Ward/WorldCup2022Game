@@ -5,7 +5,7 @@ import React from "react";
 
 /* Internal Requirements */
 import '../../css/leaguePage/groups.css';
-const teamCodes = require('../../config/teamCodes').teamCodes;
+const teamCodes = require('../../config/convert').teamCodes;
 
 const Team = ({ team, players }) => {
     const teamCode = teamCodes[team.team.name];
@@ -17,7 +17,7 @@ const Team = ({ team, players }) => {
         });
     });
 
-    const playerNum = teamToPlayer[teamCode];
+    const playerNum = teamToPlayer[teamCode] !== undefined ? teamToPlayer[teamCode] : 8;
 
     return (
             <tr>

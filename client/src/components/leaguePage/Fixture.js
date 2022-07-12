@@ -5,7 +5,7 @@ import React from "react";
 
 /* Internal Requirements */
 import '../../css/leaguePage/schedule.css';
-const teamCodes = require('../../config/teamCodes').teamCodes;
+const teamCodes = require('../../config/convert').teamCodes;
 
 const Fixture = ({ game, players, groups, gameNumber }) => {
     const homeTeamCode = teamCodes[game.teams.home.name];
@@ -24,8 +24,8 @@ const Fixture = ({ game, players, groups, gameNumber }) => {
         });
     });
 
-    const playerHome = teamToPlayer[homeTeamCode] || 9;
-    const playerAway = teamToPlayer[awayTeamCode] || 9;
+    const playerHome = teamToPlayer[homeTeamCode] !== undefined ? teamToPlayer[homeTeamCode] : 8;
+    const playerAway = teamToPlayer[awayTeamCode] !== undefined ? teamToPlayer[awayTeamCode] : 8;
 
     return (
         <div className="fixture-wrapper">

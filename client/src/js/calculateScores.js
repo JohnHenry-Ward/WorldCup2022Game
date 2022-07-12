@@ -1,4 +1,4 @@
-const teamCodes = require('../config/teamCodes').teamCodes;
+const teamCodes = require('../config/convert').teamCodes;
 
 const calculateScores = (players, fixtures) => {
     if (players.length === 0) {

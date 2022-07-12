@@ -53,7 +53,6 @@ const Schedule = ({ players, fixtures, groups }) => {
         }
     }, [fixtures]);
 
-    let allFixtures = [groupStage, roundOf16, quarters, semis, thirdPlace, final];
     let gameNumber = 0;
 
     return (

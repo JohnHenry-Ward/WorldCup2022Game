@@ -1,14 +1,26 @@
+:root{
+    --dark-blue: #1077C3;
+    --light-blue: #49BCE3;
+    --yellow: #FEC310;
+    --maroon: #56042C;
+    --green: #27AE60;
+}
+
 .groups-and-order{
-    border: 1px solid red;
     display: flex;
     flex-direction: row;
 }
 
 .groups-wrapper{
-    border: 1px solid blue;
     display: flex;
     flex-direction: column;
-    width: 70vw;
+    width: 90vw;
+    margin: 0 auto;
+}
+
+.groups-title{
+    margin: 0;
+    text-align: center;
 }
 
 .group-table{
@@ -16,37 +28,208 @@
 }
 
 .groups{
-    border: 1px solid green;
+    border: 1px solid black;
+    border-radius: 15px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-top: 2vh;
+}
+
+.group{
+    margin: 1vh 0.5vw 1vh 0.5vw;
 }
 
 .confirm-btn{
-    padding: 1em;
-    border: 1px solid pink;
+    width: 25%;
+    height: 10vh;
+    margin: 2vh auto;
+    border: none;
+    background-color: var(--green);
+    color: white;
+    font-size: 1.2em;
+    border-radius: 15px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.confirm-btn:hover{
+    cursor: pointer;
+}
+
+.group-table > tbody > tr {
+    width: 100%;
 }
 
 .team-selectable:hover{
     cursor: pointer;
 }
 
-.order-wrapper{
-    border: 1px solid cyan;
-    width: 20vw;
-    margin: auto;
-}
-
-.picks-tracker{
-    width: 90vw;
-    height: 20vh;
-    margin: auto;
-    border: 1px solid orange;
-}
-
-td.left-round{
+.draft-title{
+    text-align: center;
     margin: 0;
 }
 
-.team-name-td{
+.draft-subtitle{
+    text-align: center;
+    margin: 0;
+}
+
+.order-and-status{
+    display: flex;
+    flex-direction: row;
+    /* position: sticky; */
+    /* top: 0; */
+    margin-top: 2.5vh;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.status{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+.currentPicker, .pickTimer, .pickTracker{
+    text-align: left;
+    width: 100%;
+    font-size: 1.4em;
+    padding-left: 1rem;
+}
+
+.order-tracker{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    position: relative;
+    overflow: scroll;
+    border-radius: 15px;
+    /* box-shadow: inset -10px 0 10px -10px black; */
+    width: 80%;
+    padding: 1%;
+}
+
+.order-tracker-pick{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 2.5%;
+    margin: 1%;
+    width: 10vw;
+    max-width: 150px;
+}
+
+.order-tracker-pick-current{
+    border: 2px solid var(--green) !important;
+    margin-top: 0 !important;
+    font-weight: bold;
+}
+
+.order-tracker-pick-complete{ /* not sure how to represent finished pick */
+    border: 2px dashed black !important;
+    margin-top: 0 !important;
+}
+
+.order-tracker-pick-incomplete{
+    border: 2px solid black !important;
+    margin-top: 0 !important;
+}
+
+.pickText-playerCircle{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 100%;
+    background-color: var(--light-gray-bg);
+    border-radius: 15px;
+    position: relative;
+}
+
+.picks-tracker{
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-bottom: 2.5vh;
+}
+
+.tracker-title{
+    text-align: center;
+    margin: 0;
+}
+
+td.left-round-draft{
+    border-radius: 15px 0 0 15px;
+    margin: 0;
+    border-top: 2px solid white;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+}
+
+td.right-round-draft{
+    border-radius: 0 15px 15px 0;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+}
+
+.team-name-td-draft{
     width: 50%;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+}
+
+.tracker{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 1vh;
+    column-gap: 0.5vw;
+}
+
+.playerTracker{
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 2vh 0.5vw 2vh 0.5vw;
+}
+
+.playerTrackerHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: none;
+    padding: 0 5% 0 5%;
+}
+
+.playerName{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.picks{
+    display: flex;
+    flex-direction: column;
+}
+
+.pick{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    background-color: var(--light-gray-bg);;
+    border-radius: 15px;
+    margin: 1% 2% 1% 2%;
+    padding: 0;
+}
+
+.pick-name{
+    margin: 0;
+    margin-left: 5%;
+}
+
+.draft-team-flag{
+    margin-left: 10%;
 }

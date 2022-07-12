@@ -7,7 +7,7 @@ import Players from "./Players";
 /* Internal Requirements */
 import '../../css/leaguePage/standings.css';
 
-const Standings = ({ players, fixtures }) => {
+const Standings = ({ players, fixtures, hasDrafted }) => {
 
     /* tooltip stuff can be cleaned up/moved eventually */
     const allPlayers = Array.from(document.querySelectorAll('.player'));
@@ -21,22 +21,24 @@ const Standings = ({ players, fixtures }) => {
     // will probably need to add the scroll value as well
     allPlayers.forEach(player => {
         
-        player.onmouseover = () => {
-            let offsets = player.getBoundingClientRect();
-            let top = offsets.top;
-            let left = offsets.left;
-            let scrollY = window.scrollY;
-            let scrollX = window.scrollX;
-            let t = tooltips[player.id + '-tooltip'];
-            player.style.cursor = 'pointer';
-            t.style.display = 'grid';
-            t.style.top = -120+scrollY+top+'px';
-            t.style.left = 35+scrollX+left+'px';
-        }
-
-        player.onmouseout = () => {
-            let t = tooltips[player.id + '-tooltip'];
-            t.style.display = 'none';
+        if (hasDrafted) {
+            player.onmouseover = () => {
+                let offsets = player.getBoundingClientRect();
+                let top = offsets.top;
+                let left = offsets.left;
+                let scrollY = window.scrollY;
+                let scrollX = window.scrollX;
+                let t = tooltips[player.id + '-tooltip'];
+                player.style.cursor = 'pointer';
+                t.style.display = 'grid';
+                t.style.top = -120+scrollY+top+'px';
+                t.style.left = 35+scrollX+left+'px';
+            }
+    
+            player.onmouseout = () => {
+                let t = tooltips[player.id + '-tooltip'];
+                t.style.display = 'none';
+            }
         }
     });
     /* end of tooltip stuff */

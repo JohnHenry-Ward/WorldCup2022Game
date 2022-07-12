@@ -5,30 +5,21 @@ import React from "react";
 
 /* Internal Requirements */
 // import '../../css/leaguePage/groups.css';
-const teamCodes = require('../../config/teamCodes').teamCodes;
+const teamCodes = require('../../config/convert').teamCodes;
 
-const Team = ({ team }) => {
+const Team = ({ team, draftedTeams }) => {
     const teamCode = teamCodes[team.team.name];
-    const teamToPlayer = {};
-
-    // players.forEach(p => {
-    //     p.teamsID.forEach(t => {
-    //         teamToPlayer[t] = p.playerNumber;
-    //     });
-    // });
-
-    // const playerNum = teamToPlayer[teamCode];
 
     return (
-            <tr className="team-selectable" data-team={team.team.name}>
-                <td className="left-round">
-                    <img src={require("../../images/flags/"+teamCode+".png")} className="team-flag" alt={teamCode+' flag'} />
+            <tr className="team-selectable" data-team={team.team.name} data-ignore='true'>
+                <td className="left-round-draft" data-ignore='true'>
+                    <img src={require("../../images/flags/"+teamCode+".png")} className="team-flag" data-ignore='true' alt={teamCode+' flag'} />
                 </td>
-                <td className="team-name-td">
-                    <p className="team-name">{team.team.name}</p>
+                <td className="team-name-td-draft" data-ignore='true'>
+                    <p className="team-name" data-ignore='true'>{team.team.name}</p>
                 </td>
-                <td className="right-round">
-                    <div className="player-circle" id="player-circle-p9"></div>
+                <td className="right-round-draft" data-ignore='true'>
+                    <div className="player-circle" id="player-circle-p8" data-ignore='true'></div>
                 </td>
             </tr>
     );

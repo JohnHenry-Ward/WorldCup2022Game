@@ -55,7 +55,7 @@ router.get('/:ID', async (req, res) => {
     Route: /leagues/create
     Method: POST
     Purpose: creates a new league, adds to database
-    Params: leagueName, leaguePassword, numberOfPlayers
+    Params: leagueName, leaguePassword, numberOfPlayers, draftDate
 */
 router.post('/create', async (req, res) => {
     const payload = req.body;
@@ -69,7 +69,7 @@ router.post('/create', async (req, res) => {
         playerName: cookies['userName'],
         playerID: cookies['id'],
         isCreator: true,
-        playerNumber: 1
+        playerNumber: 0
     };
 
     // create the league
@@ -131,7 +131,7 @@ router.post('/join', async (req, res) => {
                 const newPlayer = {
                     playerName: cookies['userName'],
                     playerID: cookies['id'],
-                    playerNumber: currLeague.numberOfPlayers + 1,
+                    playerNumber: currLeague.numberOfPlayers, // don't need to add 1 since we start at 0
                     isCreator: false
                 };
 
@@ -161,6 +161,36 @@ router.post('/join', async (req, res) => {
             }
         }
     });
+});
+
+/* Below Routes Pertain to the Draft Process */
+
+router.post('/pickConfirm', async (req, res) => {
+    const payload = req.body;
+    const leagueID = payload['leagueID']; // only need league ID, since they've already joined the league
+    const team = payload['team']
+    const playerNumber = payload['playerNumber']
+
+    Leagues.findOneAndUpdate({leagueID}, 
+                            {
+                                $inc: {'draft.pickStatus.currentPick': 1},
+                                $addToSet: {[`players.${playerNumber}.teamsID`]: team}
+                            }, 
+                            (err, doc) => {
+                                if (err) {
+                                    console.log('Error updating draft for draft pick');
+                                    res.json({
+                                        'status': 'error',
+                                        'msg': 'Error updating league for most recent draft pick'
+                                    })
+                                } else {
+                                    console.log('Pick Saved!');
+                                    res.json({
+                                        'status': 'success',
+                                        'msg': 'Pick successfully saved'
+                                    })
+                                }
+                            });
 });
 
 module.exports = router;

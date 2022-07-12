@@ -5,26 +5,23 @@ import React from "react";
 import Group from './Group';
 
 /* Internal Requirements */
-import '../../css/draftPage/groups.css';
 
-const Groups = ({ groups }) => {
+const Groups = ({ groups, draftedTeams }) => {
 
     let groupCounter = 0;
 
     return (
-        <div className="groups-wrapper">
-            <h1 className="groups-title">Group Standings</h1>
+        <div>
             <div className="groups">
             {
                 groups.map((group) => {
                     groupCounter++;
                     return (
-                        <Group group={group} key={groupCounter}/>
+                        <Group group={group} key={groupCounter} draftedTeams={draftedTeams} />
                     );
                 })
             }
             </div>
-            <button className='confirm-btn'>Select <span id='selection'></span></button>
         </div>
     );
 }

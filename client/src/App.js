@@ -7,7 +7,7 @@ import Leagues from './components/Leagues';
 import Button from './components/Button';
 import CreateLeague from './components/CreateLeague';
 import JoinLeague from './components/JoinLeague';
-import Timer from './components/Timer';
+import Livescores from './components/Livescores';
 
 /* Internal Requirements */
 import './css/App.css';
@@ -17,7 +17,6 @@ const isSignedIn = require('./js/isSignedIn');
 const getCookies = require('./js/getCookies');
 const requests = require('./js/requests');
 const popup = require('./js/popup');
-const countdown = require('./js/countdown');
 
 const App = () => {
 
@@ -25,7 +24,6 @@ const App = () => {
   const [allLeagues, setAllLeagues] = useState([]);
   const [user, setUser] = useState('');
   const [signIn, setSignIn] = useState(false);
-  const [timeTilKick, setTimeTilKick] = useState(countdown.countdown(new Date("2022-11-21T10:00:00+00:00")));
 
   /* Use Effects */
   useEffect(() => {
@@ -51,21 +49,14 @@ const App = () => {
       setAllLeagues([]);
     }
   }, [signIn]);
-
-  // Countdown timer
-  setInterval(() => {
-    let ret = countdown.countdown(new Date("2022-11-21T10:00:00+00:00"));
-    setTimeTilKick(ret);
-  }, 1000);
   
   return (
     <div className="App">
       <CreateLeague closePopup={(e) => popup.closePopup('#createPopup')}/>
       <JoinLeague closePopup={(e) => popup.closePopup('#joinPopup')} />
       <Header user={user} setSignIn={setSignIn}/>
-      <Timer countingTo={new Date("2022-11-21T10:00:00+00:00")} text={'Until Kickoff!'} />
       
-      <div className='liveScoreboard'> livescores{/*maybe a widget*/}</div>
+      <Livescores />
       <div className='leagueBtnWrapper'>
         <Button text='Create A League' className='leagueCreateJoinBTN' onClick={(e) => popup.openPopup('#createPopup')}/>
         <Button text='Join A League' className='leagueCreateJoinBTN' onClick={(e) => popup.openPopup('#joinPopup')}/>

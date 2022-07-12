@@ -7,7 +7,6 @@ import Header from "../components/Header";
 import Standings from '../components/leaguePage/Standings';
 import Groups from '../components/leaguePage/Groups';
 import Schedule from '../components/leaguePage/Schedule';
-import Timer from '../components/Timer';
 
 /* Internal Requirements */
 const getCookies = require('../js/getCookies');
@@ -20,6 +19,7 @@ const League = () => {
 
     /* Use States */
     const [leagueData, setLeagueData] = useState({ });
+    const [hasDrafted, setHasDrafted] = useState(false);
     const [players, setPlayers] = useState([]); // need a seperate var to the players array for some reason
     const [draftDate, setDraftDate] = useState({ });
     const [allFixtures, setFixtures] = useState([]);
@@ -42,49 +42,48 @@ const League = () => {
 
     /* Get League Data */
     useEffect(async () => {
+        setIsLoading(true); //sometimes get unmounted error, unsure if this is the fix
         const response = await requests.getLeagueData(leagueID);
         setPlayers(response.players);
         setLeagueData(response);
-        setDraftDate(new Date(response.draftDate));
+        setDraftDate(new Date(response.draft.draftDate));
+        setHasDrafted(response.draft.hasDrafted);
         setIsLoading(false);
     }, []);
 
     return (
         <main>
             <Header user={getCookies.getCookies()['userName']}/>
-            <div className='league-header'>
-                <h3>League Name: {leagueData.name}</h3>
-                <h4>League ID: {leagueData.leagueID}</h4>
-                <h4>League Password: {leagueData.password}</h4>
-                {/* this stuff will be cleaned up and formatted better */}
-                <h4>Draft Day: {
-                        ! isLoading &&
-                        draftDate.toDateString() + ' ' + draftDate.toLocaleTimeString()
-                    }
-                </h4>
-                {
-                    ! isLoading ?
-                        leagueData.hasDrafted ?
-                        <NavLink to={`/draft/${leagueID}`} className='draftGoToBtn'>Go To Draft</NavLink>
-                        :
-                        <Timer countingTo={draftDate} text={'Until Draft!'} />
-                    :
-                    ''
-                }
-            </div>
-            <div className='main-content'>
+            {
                 
-                <div className='live-status'>
-                    <Schedule players={players} fixtures={allFixtures} groups={allGroups} />
-                    <Groups players={players} groups={allGroups} />
-                </div>
+                <div>
+                    <div className='league-header'>
+                        <h3>League Name: {leagueData.name}</h3>
+                        <h4>League ID: {leagueData.leagueID}</h4>
+                        <h4>League Password: {leagueData.password}</h4>
+                        {/* this stuff will be cleaned up and formatted better */}
+                        <h4>Draft Day: {
+                                ! isLoading &&
+                                draftDate.toDateString() + ' ' + draftDate.toLocaleTimeString()
+                            }
+                        </h4>
+                        <NavLink to={`/draft/${leagueID}`} className='draftGoToBtn'>Go To Draft</NavLink>    
+                        
+                    </div>
+                    <div className='main-content'>
+                        
+                        <div className='live-status'>
+                            <Schedule players={players} fixtures={allFixtures} groups={allGroups} />
+                            <Groups players={players} groups={allGroups} />
+                        </div>
 
-                <div className='standings'>
-                    <Standings players={players} fixtures={allFixtures}/>
+                        <div className='standings'>
+                            <Standings players={players} fixtures={allFixtures} hasDrafted={hasDrafted}/>
+                        </div>
+                        
+                    </div>
                 </div>
-                
-            </div>
-            
+            }
         </main>
     );
 }

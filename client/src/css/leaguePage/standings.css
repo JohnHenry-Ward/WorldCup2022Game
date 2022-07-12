@@ -52,22 +52,6 @@
     border-radius: 50%;
 }
 
-#player-circle-p1{
-    background-color: var(--player-1-color);
-}
-
-#player-circle-p2{
-    background-color: var(--player-2-color);
-}
-
-#player-circle-p3{
-    background-color: var(--player-3-color);
-}
-
-#player-circle-p4{
-    background-color: var(--player-4-color);
-}
-
 /* Flag tooltip */
 
 .flags-tooltip{

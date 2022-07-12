@@ -27,9 +27,11 @@ const GooglePopup = ({user, logout, closePopup}) => {
                     isSignedIn.isSignedIn()
                     ? 
                     <div>
-                        <h4>Signed in as: {user}</h4>
-                        <button onClick={logout}>Sign Out</button>
-                        <NavLink to={'/account'} className='goToAccountBtn'>Go To Account</NavLink>
+                        <h4 id='popupTitle'>Signed in as: {user}</h4>
+                        <div className='btnsWrapper'>
+                            <button onClick={logout} id='signOutBtn'>Sign Out</button>
+                            <NavLink to={'/account'} className='goToAccountBtn'>Go To Account</NavLink>
+                        </div>
                     </div>
                     : 
                     <div>

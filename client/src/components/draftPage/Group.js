@@ -7,7 +7,7 @@ import Team from './Team';
 /* Internal Requirements */
 // import '../../css/leaguePage/groups.css';
 
-const Group = ({ group }) => {
+const Group = ({ group, draftedTeams }) => {
 
     return (
         <div className="group">
@@ -17,7 +17,7 @@ const Group = ({ group }) => {
                     {
                         group.map(team => {
                             return (
-                                <Team team={team} key={team.rank}/>
+                                <Team team={team} key={team.rank} draftedTeams={draftedTeams} />
                             );
                         })
                     }

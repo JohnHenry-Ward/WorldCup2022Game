@@ -8,13 +8,11 @@ const Timer = ({countingTo, text}) => {
 
     /* Use States */
     const [timeTilKick, setTimeTilKick] = useState(countdown.countdown(countingTo));
-    const [isLoading, setIsLoading] = useState(true);
 
     // Countdown timer
     setInterval(() => {
         let ret = countdown.countdown(countingTo);
         setTimeTilKick(ret);
-        setIsLoading(false);
     }, 1000);
 
     return (

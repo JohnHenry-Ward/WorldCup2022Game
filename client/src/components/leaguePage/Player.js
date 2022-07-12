@@ -16,7 +16,7 @@ const Player = ({player, place}) => {
         7: '7th',
         8: '8th'
     }
-    
+
     return (
         <tr className="player" id={'player-' + player.playerNumber}>
             <td className="player-position left-round">{placeLookup[place]}</td>

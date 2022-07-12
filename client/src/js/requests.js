@@ -83,4 +83,35 @@ const getGroupStage = async () => {
     .catch(error => console.log(error));
 }
 
-export { createLeague, joinLeague, getLeagues, getLeagueData, getFixtures, getGroupStage }
+const requestDraftSelection = async (team, playerNumber, leagueID) => {
+
+    return axios({
+        method: 'POST',
+        url: '/leagues/pickConfirm',
+        data: {
+            team: team,
+            playerNumber: playerNumber,
+            leagueID: leagueID
+        }
+    })
+    .then((res) => {
+        if (res.data.status === 'error') {
+            console.log('Error saving the pick');
+        } else if (res.data.status === 'success') {
+            console.log('Pick saved succesfully');
+        }
+        return res;
+    })
+    .catch((error) => {
+        console.log('Request failed');
+        console.log(error);
+        return {
+            "status": "error",
+            "msg": "error sending post request"
+        }
+    });
+    
+}
+
+export { createLeague, joinLeague, getLeagues, getLeagueData, getFixtures, getGroupStage,
+         requestDraftSelection }
