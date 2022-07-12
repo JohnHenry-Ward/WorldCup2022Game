@@ -1,4 +1,4 @@
-import { teamCodes, fullNames } from "../config/convert";
+import { teamCodes, fullNames } from "./convert";
 import { requestDraftSelection } from "./requests";
 
 const highlightGreen = (teamElement) => {

@@ -5,7 +5,7 @@ import React from "react";
 
 /* Internal Requirements */
 import '../../css/leaguePage/schedule.css';
-const teamCodes = require('../../config/convert').teamCodes;
+const teamCodes = require('../../js/convert').teamCodes;
 
 const Fixture = ({ game, players, groups, gameNumber }) => {
     const homeTeamCode = teamCodes[game.teams.home.name];

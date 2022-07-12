@@ -5,7 +5,7 @@ import React, {useState, useEffect} from 'react';
 
 /* Internval Requirements */
 const draft = require('../../js/draft');
-const fullNames = require('../../config/convert').fullNames;
+const fullNames = require('../../js/convert').fullNames;
 import '../../css/draftPage/draft.css';
 
 const PlayerTracker = ({ player, draftedTeams, picksPerPlayer, playerPickNum, playerCount, maxPicks }) => {
