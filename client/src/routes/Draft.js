@@ -45,6 +45,12 @@ const Draft = () => {
         setMaxPicks(l.draft.pickStatus.totalPicks);
         setCurrentOrder(l.draft.draftOrder);
         setDraftDate(new Date(l.draft.draftDate));
+
+        if (l.draft.hasDrafted === true) {
+            window.alert('The draft has already happend!');
+            window.history.back()
+        }
+
         let temp = [];
 
         l.players.forEach(p => {
@@ -82,7 +88,7 @@ const Draft = () => {
             }
         });
         setCurrentPlayerName(temp);
-    }, [players, currentPick]);
+    }, [players, currentPick, leagueData]);
 
     useEffect(() => {
         if (!isLoading) {
@@ -90,6 +96,33 @@ const Draft = () => {
         }
     }, [isLoading]);
 
+    useEffect(() => {
+        setInterval( async () => {
+            console.log('Checking for updates...')
+            const l = await requests.getLeagueData(leagueID);
+            setLeagueData(l);
+            setCurrentPick(l.draft.pickStatus.currentPick);
+            let temp = [];
+            l.players.forEach(p => {
+                let picksPerPlayer = draft.picksPerPlayer(l.players.length);
+                let num = p.playerNumber;
+                let start = num * picksPerPlayer;
+    
+                for (let i = 0; i < picksPerPlayer; i++) {
+                    temp.push({'TBD' : num});
+                }
+    
+                p.teamsID.forEach(t => {
+                    temp[start] = {[t]: num};
+                    start++;
+                });
+            });
+            setDraftedTeams(temp);
+            draft.scrollOrderElement('current'); 
+            draft.setEventListeners(setCurrentTeam, temp); //must do this after page is loaded
+        }, 5000)
+    }, [])
+    
     return (
         <div className='draft'>
             <Header user={getCookies.getCookies()['userName']} />
