@@ -1,12 +1,11 @@
 /* Requirements */
 import React, {useState, useEffect} from 'react';
 
-/* Other Components */
-
-/* Internval Requirements */
+/* Internal Requirements */
+import '../../css/draftPage/draft.css';
 const draft = require('../../js/draft');
 const fullNames = require('../../js/convert').fullNames;
-import '../../css/draftPage/draft.css';
+
 
 const PlayerTracker = ({ player, draftedTeams, picksPerPlayer, playerPickNum, playerCount, maxPicks }) => {
     /* Use States */;

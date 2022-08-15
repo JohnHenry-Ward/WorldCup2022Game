@@ -9,9 +9,10 @@ import Groups from '../components/leaguePage/Groups';
 import Schedule from '../components/leaguePage/Schedule';
 
 /* Internal Requirements */
+import '../css/leaguePage/league.css';
 const getCookies = require('../js/getCookies');
 const requests = require('../js/requests');
-import '../css/leaguePage/league.css';
+
 
 const League = () => {
     /* Routes Parameters */

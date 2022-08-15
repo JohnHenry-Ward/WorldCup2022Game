@@ -5,8 +5,9 @@ import React from 'react';
 import PlayerTracker from './PlayerTracker';
 
 /* Internal Requirements */
-const draft = require('../../js/draft');
 import '../../css/draftPage/draft.css';
+const draft = require('../../js/draft');
+
 
 const Tracker = ({ players, draftedTeams, maxPicks }) => {
 

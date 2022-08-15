@@ -10,10 +10,11 @@ import Order from '../components/draftPage/Order';
 import Tracker from '../components/draftPage/Tracker';
 
 /* Internval Requirements */
+import '../css/draftPage/draft.css';
 const getCookies = require('../js/getCookies');
 const requests = require('../js/requests');
 const draft = require('../js/draft');
-import '../css/draftPage/draft.css';
+
 
 const Draft = () => {
     /* Routes Parameters */
