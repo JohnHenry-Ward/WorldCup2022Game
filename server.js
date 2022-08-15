@@ -45,6 +45,7 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
     mongoURI = process.env.mongoURI;
     rapidKey = process.env.rapidKey;
+    app.use(express.static('client/build'));
 }
 
 /* Connect to MongoDB Database */
