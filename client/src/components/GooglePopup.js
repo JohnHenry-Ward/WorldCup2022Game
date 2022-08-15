@@ -6,7 +6,12 @@ import { NavLink } from 'react-router-dom';
 import '../css/GooglePopup.css';
 
 /* Dev-Config */
-const config = require('../config/dev_config.json');
+if (process.env.NODE_ENV !== 'production') {
+    const config = require('../config/config.json');
+    googleClientId = config.GoogleClientID;
+} else {
+    googleClientId = process.env.googleClientId;
+}
 
 /* Internal JavaScript */
 const isSignedIn = require('../js/isSignedIn');
