@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import '../css/GooglePopup.css';
 
 /* Dev-Config */
+let googleClientId = null;
 if (process.env.NODE_ENV !== 'production') {
     const config = require('../config/config.json');
     googleClientId = config.GoogleClientID;
@@ -21,7 +22,7 @@ const GooglePopup = ({user, logout, closePopup}) => {
     return (
         <div id="googleLoginPopupBG">
             <div id="g_id_onload"
-                data-client_id={config['GoogleClientID']}
+                data-client_id={googleClientId}
                 data-context="use"
                 data-ux_mode="popup"
                 data-login_uri="http://localhost:5000/login"
