@@ -8,7 +8,7 @@ const Users = require('../models/Users');
 
 /* Local Variables */
 const router = express.Router();
-const CLIENT_ID = null;
+let CLIENT_ID = null;
 const { OAuth2Client } = require('google-auth-library');
 
 /* Middleware */

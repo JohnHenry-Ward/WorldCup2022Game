@@ -8,7 +8,7 @@ const Users = require('../models/Users');
 
 /* Local Variables */
 const router = express.Router();
-const CLIENT_ID = null;
+let CLIENT_ID = null;
 
 /* Middleware */
 router.use(bodyParser.urlencoded({ extended: false }));
