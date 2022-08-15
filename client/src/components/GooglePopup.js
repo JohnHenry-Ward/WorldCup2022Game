@@ -8,7 +8,7 @@ import '../css/GooglePopup.css';
 /* Dev-Config */
 let googleClientId = null;
 if (process.env.NODE_ENV !== 'production') {
-    const config = require('../config/config.json');
+    const config = require('../config/dev_config.json');
     googleClientId = config.GoogleClientID;
 } else {
     googleClientId = process.env.googleClientId;

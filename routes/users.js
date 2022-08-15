@@ -15,7 +15,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser());
 
 if (process.env.NODE_ENV !== 'production') {
-    const config = require('./config/dev_config.json');
+    const config = require('../config/dev_config.json');
     CLIENT_ID = config.GoogleClientID;
 } else {
     CLIENT_ID = process.env.googleClientId;
