@@ -4,9 +4,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { v4: uuid } = require('uuid');
 
-/* Internal Requirements */
-const config = require('../config/dev_config.json');
-
 /* Local Variables */
 const router = express.Router();
 

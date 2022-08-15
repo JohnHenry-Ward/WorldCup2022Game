@@ -34,6 +34,8 @@ const Draft = () => {
     const [loggedInUserName, setLoggedInUserName] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
+    // THESE USE EFFECTS CAN BE MUCH BETTER ORGANIZED ESPECIALLY WITH THE INTERVAL FIRING EVERY 5 SECONDS
+
     /* Use Effects */
     useEffect(async () => {
         setIsLoading(true);
@@ -96,32 +98,32 @@ const Draft = () => {
         }
     }, [isLoading]);
 
-    useEffect(() => {
-        setInterval( async () => {
-            console.log('Checking for updates...')
-            const l = await requests.getLeagueData(leagueID);
-            setLeagueData(l);
-            setCurrentPick(l.draft.pickStatus.currentPick);
-            let temp = [];
-            l.players.forEach(p => {
-                let picksPerPlayer = draft.picksPerPlayer(l.players.length);
-                let num = p.playerNumber;
-                let start = num * picksPerPlayer;
+    // useEffect(() => {
+    //     setInterval( async () => {
+    //         console.log('Checking for updates...')
+    //         const l = await requests.getLeagueData(leagueID);
+    //         setLeagueData(l);
+    //         setCurrentPick(l.draft.pickStatus.currentPick);
+    //         let temp = [];
+    //         l.players.forEach(p => {
+    //             let picksPerPlayer = draft.picksPerPlayer(l.players.length);
+    //             let num = p.playerNumber;
+    //             let start = num * picksPerPlayer;
     
-                for (let i = 0; i < picksPerPlayer; i++) {
-                    temp.push({'TBD' : num});
-                }
+    //             for (let i = 0; i < picksPerPlayer; i++) {
+    //                 temp.push({'TBD' : num});
+    //             }
     
-                p.teamsID.forEach(t => {
-                    temp[start] = {[t]: num};
-                    start++;
-                });
-            });
-            setDraftedTeams(temp);
-            draft.scrollOrderElement('current'); 
-            draft.setEventListeners(setCurrentTeam, temp); //must do this after page is loaded
-        }, 5000)
-    }, [])
+    //             p.teamsID.forEach(t => {
+    //                 temp[start] = {[t]: num};
+    //                 start++;
+    //             });
+    //         });
+    //         setDraftedTeams(temp);
+    //         draft.scrollOrderElement('current'); 
+    //         draft.setEventListeners(setCurrentTeam, temp); //must do this after page is loaded
+    //     }, 5000)
+    // }, [])
     
     return (
         <div className='draft'>
@@ -147,7 +149,7 @@ const Draft = () => {
                             <button className='confirm-btn'
                                     onClick={() => {
                                         let res = draft.confirmDraftSelection(currentTeam, currentPlayerNum, leagueID);
-                                        if (res === true) { // this might not work, confirmDraftSelection is async :(
+                                        if (res === true) {
                                             draft.updateDraftedTeams(currentTeam, currentPlayerNum, draftedTeams, setDraftedTeams);
                                             draft.goToNextPlayer(currentPick, setCurrentPick);
                                             draft.scrollOrderElement('next'); 

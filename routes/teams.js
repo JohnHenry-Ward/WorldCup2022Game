@@ -1,9 +1,6 @@
 /* Libraries */
 const express = require('express');
 
-/* Internal Requirements */
-const config = require('../config/dev_config.json');
-
 /* Local Variables */
 const router = express.Router();
 

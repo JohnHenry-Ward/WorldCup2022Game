@@ -79,6 +79,11 @@ const setEventListeners = (setCurrentTeam, draftedTeams) => {
     });
 }
 
+const setElementsAsClickable = (currentPlayer, loggedInPlayer) => {
+    console.log(currentPlayer);
+    console.log(loggedInPlayer);
+}
+
 const generateOrder = (maxPicks, playeOrder, currentPick) => {
     const order = [];
 
@@ -113,19 +118,17 @@ const generateOrder = (maxPicks, playeOrder, currentPick) => {
 const confirmDraftSelection = (team, playerNumber, leagueID) => {
     if (team !== null && playerNumber !== null && leagueID !== null) {
         const response = requestDraftSelection(team, playerNumber, leagueID);
-        // const response = {'status': 'success'}; //testing
         if (response.status === 'error') {
             //need to do something so we don't skip to next player, let this player re-pick?
+            console.log('Error confirming draft selection');
             return false;
         } else {
             // cross out team/make them un-selectable
-            // move to next player (will be done automatically via db?)
             const teamElement = document.querySelector("[data-team='"+fullNames[team]+"']");
             teamElement.style.cursor = 'default';
             teamElement.childNodes[1].style.textDecoration  = 'line-through';
             teamElement.childNodes[0].childNodes[0].style.opacity = '0.5';
             teamElement.childNodes[2].childNodes[0].id = `player-circle-p${playerNumber}`;
-            // teamElement.removeEventListener('click', selectTeam);
             removeHighlight(teamElement);
             teamElement.replaceWith(teamElement.cloneNode(true)); //removing event listener
             return true;
@@ -227,5 +230,5 @@ const getFuturePicks = (playerPickNum, playerCount) => {
     return picks;
 }
 
-export { setEventListeners, generateOrder, confirmDraftSelection, scrollOrderElement,
+export { setEventListeners, generateOrder, confirmDraftSelection, scrollOrderElement, setElementsAsClickable,
          picksPerPlayer, updateDraftedTeams, goToNextPlayer, getFuturePicks };

@@ -9,13 +9,21 @@ const Users = require('../models/Users');
 
 /* Local Variables */
 const router = express.Router();
-const CLIENT_ID = config.GoogleClientID;
+const CLIENT_ID = null;
 const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client(CLIENT_ID);
 
 /* Middleware */
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser());
+
+if (process.env.NODE_ENV !== 'production') {
+    const config = require('./config/dev_config.json');
+    CLIENT_ID = config.GoogleClientID;
+} else {
+    CLIENT_ID = process.env.googleClientId;
+}
+
+const client = new OAuth2Client(CLIENT_ID);
 
 /* Routes */
 

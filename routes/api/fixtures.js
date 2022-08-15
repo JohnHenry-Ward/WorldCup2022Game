@@ -4,9 +4,6 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-/* Internal Requirements */
-const config = require('../../config/dev_config.json');
-
 /* Local Variables */
 const router = express.Router();
 

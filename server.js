@@ -8,7 +8,6 @@ const fs = require('fs');
 const cron = require('node-cron');
 
 /* Internal requirements */
-const config = require('./config/dev_config.json');
 const teams = require('./routes/teams');
 const leagues = require('./routes/leagues');
 const login = require('./routes/login');
@@ -31,8 +30,25 @@ app.use('/users', users);
 app.use('/api/fixtures', fixtures);
 app.use('/api/groupStage', groupStage);
 
+/* Cron Jobs */
+groups_CRON = "31 4,7,10,13 * 11,12 *";
+fixtures_CRON = "0,5,10,15,20,25,30,35,40,45,50,55 4,7,10,13,12,14 * 11,12 *";
+every_min_CRON = "* * * * *";
+
+let mongoURI = null;
+let rapidKey = null;
+
+if (process.env.NODE_ENV !== 'production') {
+    const config = require('./config/dev_config.json');
+    mongoURI = config['mongoURI'];
+    rapidKey = config['RapidKey'];
+} else {
+    mongoURI = process.env.mongoURI;
+    rapidKey = process.env.rapidKey;
+}
+
 /* Connect to MongoDB Database */
-mongoose.connect(config['mongoURI'], { useNewUrlParser : true }, (err, db) => {
+mongoose.connect(mongoURI, { useNewUrlParser : true }, (err, db) => {
     if (err) {
         console.log(err);
     } else {
@@ -41,7 +57,7 @@ mongoose.connect(config['mongoURI'], { useNewUrlParser : true }, (err, db) => {
 });
 
 /* Update scores every 5 minutes in hour 4, 7, 10, 13 in November/December */
-cron.schedule(config.Groups_CRON, () => {
+cron.schedule(groups_CRON, () => {
     
     // Request Scores and write them to ./db/fixtures.json
     console.log('Attempting to fetch updated fixtures');
@@ -54,7 +70,7 @@ cron.schedule(config.Groups_CRON, () => {
         },
         headers: {
             'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-            'X-RapidAPI-Key': config['RapidKey']
+            'X-RapidAPI-Key': rapidKey
             }
     })
     .then((doc) => {
@@ -74,7 +90,7 @@ cron.schedule(config.Groups_CRON, () => {
 });
 
 /* Update standings at 4:31, 7:31, 10:31, 13:31 in November/December */
-cron.schedule(config.Fixtures_CRON, () => {
+cron.schedule(fixtures_CRON, () => {
 
     // Request Group Stage standings, Write them to ./db/groupStage.json
     console.log('Attempting to fetch updated Group Stage');
@@ -87,7 +103,7 @@ cron.schedule(config.Fixtures_CRON, () => {
         },
         headers: {
             'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-            'X-RapidAPI-Key': config['RapidKey']
+            'X-RapidAPI-Key': rapidKey
         }
     })
     .then((doc) => {
