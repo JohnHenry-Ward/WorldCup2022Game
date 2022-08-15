@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 /* Internal Requirements */
-const config = require('../config/dev_config.json');
 const Users = require('../models/Users');
 
 /* Local Variables */
