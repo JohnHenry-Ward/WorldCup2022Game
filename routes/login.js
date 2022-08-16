@@ -20,6 +20,7 @@ if (process.env.NODE_ENV !== 'production') {
     CLIENT_ID = config.GoogleClientID;
 } else {
     CLIENT_ID = process.env.googleClientId;
+    console.log(CLIENT_ID);
 }
 
 const client = new OAuth2Client(CLIENT_ID);
