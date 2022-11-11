@@ -169,13 +169,14 @@ const createUser = async (username, password) => {
     });
 }
 
-const startDraft = (leagueID, order) => {
+const startDraft = (leagueID, order, totalPicks) => {
     return axios({
         method: 'POST',
         url: '/leagues/startDraft',
         data: {
             leagueID,
-            order
+            order,
+            totalPicks
         }
     })
     .then((res) => {

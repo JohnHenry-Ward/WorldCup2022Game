@@ -171,12 +171,11 @@ const Draft = () => {
                                         let res = draft.confirmDraftSelection(currentTeam, currentPlayerNum, leagueID);
                                         if (res === true) {
                                             draft.updateDraftedTeams(currentTeam, currentPlayerNum, draftedTeams, setDraftedTeams);
-                                            if (draft.checkIfDraftIsDone(currentPick+1, maxPicks)) {
-                                                draft.goToNextPlayer(currentPick, setCurrentPick);
+                                            draft.goToNextPlayer(currentPick, setCurrentPick);
+                                            draft.scrollOrderElement('next');
+                                            if (draft.checkIfDraftIsDone(currentPick, maxPicks)) {
                                                 window.alert("The draft has ended. Good Luck!")
-                                            } else {
-                                                draft.scrollOrderElement('next'); 
-                                            } 
+                                            }
                                         }
                                     
                                     }}>

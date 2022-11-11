@@ -166,7 +166,7 @@ router.post('/join', async (req, res) => {
                                         });
 
                 //add league to user
-                Users.findOneAndUpdate({'id' : cookies['username'], 'leagues.id': {$ne: leagueID}}, 
+                Users.findOneAndUpdate({'username' : cookies['username'], 'leagues.id': {$ne: leagueID}}, 
                                         {$addToSet: { leagues: { id: leagueID, name: currLeague.name }}},
                                         (err, doc) => {
                                             if (err) {
@@ -196,7 +196,7 @@ router.post('/startDraft', async (req, res) => {
     const leagueID = payload['leagueID'];
     const order = payload['order'];
     const totalPicks = payload['totalPicks'];
-    Leagues.findOneAndUpdate({leagueID}, {"draft.draftStatus": 'LIVE', "draft.draftOrder": order, "draft.draftStatus.totalPicks": totalPicks},
+    Leagues.findOneAndUpdate({leagueID}, {"draft.draftStatus": 'LIVE', "draft.draftOrder": order, "draft.pickStatus.totalPicks": totalPicks},
         (err, doc) => {
             if (err) {
                 console.log('Error starting draft');

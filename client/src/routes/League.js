@@ -14,7 +14,7 @@ import infoIcon from '../images/icons/circle-info-solid.svg';
 import { openPopup, closePopup } from '../js/popup';
 const getCookies = require('../js/getCookies');
 const requests = require('../js/requests');
-const { generateOrder } = require('../js/draft');
+const { generateOrder, picksPerPlayer } = require('../js/draft');
 
 
 const League = () => {
@@ -69,7 +69,7 @@ const League = () => {
 
     const startDraft = async () => {
         const fullOrder = generateOrder(leagueData.numberOfPlayers);
-        const totalPicks = 32;
+        const totalPicks = picksPerPlayer(leagueData.numberOfPlayers) * leagueData.numberOfPlayers;
         const res = await requests.startDraft(leagueData.leagueID, fullOrder, totalPicks);
     }
 
