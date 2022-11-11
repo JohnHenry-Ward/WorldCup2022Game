@@ -19,7 +19,7 @@ const Order = ({ maxPicks, players, currentPick, order }) => {
     }, []);
 
     let pickNum = 0;
-
+    
     return (
         <div className='order-tracker'>
             {

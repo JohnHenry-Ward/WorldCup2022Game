@@ -84,15 +84,37 @@ const setElementsAsClickable = (currentPlayer, loggedInPlayer) => {
     console.log(loggedInPlayer);
 }
 
-const generateOrder = (maxPicks, playeOrder, currentPick) => {
-    const order = [];
+const randomOrder = (playerCount) => {
+    let arr = [];
+    for(let i = 0; i < playerCount; i++) {
+        arr.push(i);
+    }
+
+    for (let i = arr.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+    
+        // swap elements arr[i] and arr[j]
+        // we use "destructuring assignment" syntax to achieve that
+        // you'll find more details about that syntax in later chapters
+        // same can be written as:
+        // let t = arr[i]; arr[i] = arr[j]; arr[j] = t
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+
+    return arr;
+}
+
+const generateOrder = (playerCount) => {
+    let order = [];
+    const playerOrder = randomOrder(playerCount);
+    const maxPicks = picksPerPlayer(playerCount) * playerCount;
 
     // snake format
     let currentPlayer = 0;
     let goingUp = true;
     for (let i = 0; i < maxPicks; i++) {
         if (goingUp) {
-            if (currentPlayer >= playeOrder.length) {
+            if (currentPlayer >= playerOrder.length) {
                 goingUp = false;
                 currentPlayer--;
             }
@@ -103,7 +125,7 @@ const generateOrder = (maxPicks, playeOrder, currentPick) => {
             }
         }
 
-        order.push(playeOrder[currentPlayer]);
+        order.push(playerOrder[currentPlayer]);
 
         if (goingUp) {
             currentPlayer++;
@@ -111,7 +133,7 @@ const generateOrder = (maxPicks, playeOrder, currentPick) => {
             currentPlayer--;
         }
     }
-
+    let currentPick = 1;
     return order.slice(currentPick-1);
 }
 
@@ -230,5 +252,9 @@ const getFuturePicks = (playerPickNum, playerCount) => {
     return picks;
 }
 
+const checkIfDraftIsDone = (currentPick, maxPicks) => {
+    return maxPicks < currentPick;
+}
+
 export { setEventListeners, generateOrder, confirmDraftSelection, scrollOrderElement, setElementsAsClickable,
-         picksPerPlayer, updateDraftedTeams, goToNextPlayer, getFuturePicks };
+         picksPerPlayer, updateDraftedTeams, goToNextPlayer, getFuturePicks, checkIfDraftIsDone };

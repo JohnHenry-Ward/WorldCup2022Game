@@ -36,6 +36,13 @@
     color: white;
 }
 
+.leagueTitle{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 0.5vw;
+}
+
 .leagueLogo{
     width: 2em;
 }
@@ -62,5 +69,51 @@
 }
 
 .leagueGoToBTN:hover{
+    cursor: pointer;
+}
+
+#leagueInfoPopupBG{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: darkgray;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#leagueInfoPopupContent{
+    background-color: white;
+    width: 20vw;
+    height: fit-content;
+    /* min-height: 30vh; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 2vh 3vw;
+}
+
+#closeLeagueInfoPopup{
+    width: fit-content;
+    margin: auto;
+    background-color: var(--maroon);
+    border: 0;
+    border-radius: 15px;
+    color: white;
+    padding: 3% 4%;
+    font-family: var(--font);
+}
+
+.infoIcon{
+    width: 0.75em;
+}
+
+.infoIcon:hover{
     cursor: pointer;
 }

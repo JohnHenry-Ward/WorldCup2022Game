@@ -88,13 +88,32 @@
     display: flex;
     flex-direction: column;
     width: 20%;
+    row-gap: 5px;
+    font-size: 1.2em;
+    text-align: left;
+    padding-left: 1rem;
+    border-right: 1px solid black;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
-.currentPicker, .pickTimer, .pickTracker{
+.currentPicker{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 5px;
+    font-weight: bold;
+}
+
+.currentPicker, .pickTimer, .pickTracker, .onTheClock{
     text-align: left;
     width: 100%;
-    font-size: 1.4em;
-    padding-left: 1rem;
+}
+
+.player-circle{
+    width: 1em;
+    height: 1em; 
+    border-radius: 50%;
 }
 
 .order-tracker{

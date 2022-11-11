@@ -17,7 +17,8 @@ const CreateLeague = ({closePopup}) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        let dateTime = new Date(leagueDraftDate + 'T' + leagueDraftTime)
+        let dateTime = new Date(leagueDraftDate + 'T' + leagueDraftTime);
+        console.log('1: ' + dateTime);
         //console.log(dateTime.toDateString(), dateTime.toLocaleTimeString()); temp to show conversion to easy to read string
         await requests.createLeague(leagueName, leaguePassword, dateTime);
         setLeagueName(' ');
@@ -39,10 +40,10 @@ const CreateLeague = ({closePopup}) => {
                     <input type="text" name="leagueName" required onChange={(e) => setLeagueName(e.target.value)}></input>
                     <label htmlFor="leaguePassword">Password</label>
                     <input type="text" name="leaguePassword" required onChange={(e) => setLeaguePassword(e.target.value)}></input>
-                    <label htmlFor="leagueDraftDate">Draft Date</label>
+                    {/* <label htmlFor="leagueDraftDate">Draft Date</label>
                     <input type="date" name="leagueDraftDate" required onChange={(e) => setLeagueDraftDate(e.target.value)}></input>
                     <label htmlFor="leagueDraftTime">Draft Time (Local to you)</label>
-                    <input type="time" name="leagueDraftTime" required onChange={(e) => setLeagueDraftTime(e.target.value)}></input>
+                    <input type="time" name="leagueDraftTime" required onChange={(e) => setLeagueDraftTime(e.target.value)}></input> */}
                     <input type="submit" value="Create!" className='createJoinBTN'></input>
                 </form>
                 </div>

@@ -32,7 +32,7 @@ app.use('/api/groupStage', groupStage);
 
 /* Cron Jobs */
 groups_CRON = "31 4,7,10,13 * 11,12 *";
-fixtures_CRON = "0,5,10,15,20,25,30,35,40,45,50,55 4,7,10,13,12,14 * 11,12 *";
+fixtures_CRON = "0,5,10,15,20,25,30,35,40,45,50,55 4,7,10,12,13,14 * 11,12 *";
 every_min_CRON = "* * * * *";
 
 let mongoURI = null;
@@ -58,7 +58,7 @@ mongoose.connect(mongoURI, { useNewUrlParser : true }, (err, db) => {
 });
 
 /* Update scores every 5 minutes in hour 4, 7, 10, 13 in November/December */
-cron.schedule(groups_CRON, () => {
+cron.schedule(fixtures_CRON, () => {
     
     // Request Scores and write them to ./db/fixtures.json
     console.log('Attempting to fetch updated fixtures');
@@ -91,7 +91,7 @@ cron.schedule(groups_CRON, () => {
 });
 
 /* Update standings at 4:31, 7:31, 10:31, 13:31 in November/December */
-cron.schedule(fixtures_CRON, () => {
+cron.schedule(groups_CRON, () => {
 
     // Request Group Stage standings, Write them to ./db/groupStage.json
     console.log('Attempting to fetch updated Group Stage');

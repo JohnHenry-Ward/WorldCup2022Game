@@ -20,6 +20,19 @@ html, body, .App{
     border-radius: 15px;
 }
 
+.liveScoreboard-header{
+    text-align: center;
+    height: 10%;
+}
+
+.liveScoreboard-scores{
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    height: 80%;
+    overflow: scroll;
+}
+
 .countdown-wrapper{
     display: flex;
     flex-direction: column;

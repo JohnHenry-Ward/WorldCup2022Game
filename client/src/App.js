@@ -34,7 +34,7 @@ const App = () => {
     const userSignedIn = isSignedIn.isSignedIn();
     if (userSignedIn === true) {
       const cookies = getCookies.getCookies();
-      setUser(cookies['userName']);
+      setUser(cookies['username']);
     } else {
       setUser('');
     }
@@ -43,7 +43,7 @@ const App = () => {
   useEffect(async () => {
     const userSignedIn = isSignedIn.isSignedIn();
     if (userSignedIn === true) {
-      const leagues = await requests.getLeagues(getCookies.getCookies()['id']);
+      const leagues = await requests.getLeagues(getCookies.getCookies()['username']);
       setAllLeagues(leagues);
     } else {
       setAllLeagues([]);

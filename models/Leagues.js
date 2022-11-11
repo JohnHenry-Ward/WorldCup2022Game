@@ -8,7 +8,12 @@ const schema = mongoose.Schema({
    draft: {
        hasDrafted: {
            type: Boolean,
-           default: null
+           default: false
+       },
+       draftStatus: {
+        type: String,
+        enum: ["PRE", "LIVE", "POST"],
+        default: "PRE",
        },
        draftDate: {
            type: Date,
@@ -27,7 +32,7 @@ const schema = mongoose.Schema({
                type: Number,
                default: 1
            },
-           maxPicks: {
+           totalPicks: {
                type: Number,
                default: 32
             }
@@ -38,7 +43,10 @@ const schema = mongoose.Schema({
            playerName: String, 
            playerID: String,
            playerNumber: Number,
-           pickNumber: Number,
+           pickNumber: {
+            type: Number,
+            default: -1
+           },
            isCreator: Boolean,
            teamsID: [String]
        }

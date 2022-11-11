@@ -3,6 +3,10 @@
     --player-1-color: #00FF00;
     --player-2-color: #0000FF;
     --player-3-color: #FFFF00;
+    --player-4-color: #F58231;
+    --player-5-color: #911EB4;
+    --player-6-color: #FABED4;
+    --player-7-color: #BFEF45;
     --player-8-color: #FFFFFF;
     --light-gray-bg:  #EEEEEE;
 }
@@ -13,11 +17,12 @@ html{
 
 .league-header{
     height: fit-content;
+    text-align: center;
 }
 
 .main-content{
     display: flex;
-    margin: 1vh 3vw;
+    margin: 5vh 3vw;
 }
 
 .section-title{
@@ -26,10 +31,15 @@ html{
     margin: 1em 0;
 }
 
+#leagueInfoPopupContent{
+    text-align: left;
+}
+
 .live-status{
-    display: flex;
-    flex-direction: column;
-    margin: auto;
+    /* display: flex;
+    flex-direction: column; */
+    margin: 0 auto 0 auto;
+
 }
 
 .draftGoToBtn{
@@ -38,6 +48,11 @@ html{
     border-radius: 15px;
     color: white;
     text-decoration: none;
+    padding: 5px;
+}
+
+.draftGoToBtn:hover{
+    cursor: pointer;
 }
 
 /* Collapsable Sections */
@@ -62,7 +77,6 @@ html{
     display: none;
 }
 
-
 #player-circle-p0{
     background-color: var(--player-0-color);
 }
@@ -77,6 +91,22 @@ html{
 
 #player-circle-p3{
     background-color: var(--player-3-color);
+}
+
+#player-circle-p4{
+    background-color: var(--player-4-color);
+}
+
+#player-circle-p5{
+    background-color: var(--player-5-color);
+}
+
+#player-circle-p6{
+    background-color: var(--player-6-color);
+}
+
+#player-circle-p7{
+    background-color: var(--player-7-color);
 }
 
 #player-circle-p8{

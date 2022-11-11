@@ -10,8 +10,11 @@ import Schedule from '../components/leaguePage/Schedule';
 
 /* Internal Requirements */
 import '../css/leaguePage/league.css';
+import infoIcon from '../images/icons/circle-info-solid.svg';
+import { openPopup, closePopup } from '../js/popup';
 const getCookies = require('../js/getCookies');
 const requests = require('../js/requests');
+const { generateOrder } = require('../js/draft');
 
 
 const League = () => {
@@ -21,7 +24,9 @@ const League = () => {
     /* Use States */
     const [leagueData, setLeagueData] = useState({ });
     const [hasDrafted, setHasDrafted] = useState(false);
+    const [draftStatus, setDraftStatus] = useState()
     const [players, setPlayers] = useState([]); // need a seperate var to the players array for some reason
+    const [isLeagueOwnwer, setIsLeagueOwner] = useState(false);
     const [draftDate, setDraftDate] = useState({ });
     const [allFixtures, setFixtures] = useState([]);
     const [allGroups, setGroups] = useState([]);
@@ -49,27 +54,75 @@ const League = () => {
         setLeagueData(response);
         setDraftDate(new Date(response.draft.draftDate));
         setHasDrafted(response.draft.hasDrafted);
+        setDraftStatus(response.draft.draftStatus);
+
+        response.players.forEach(player => {
+            if (player.isCreator) {
+                if (player.playerName === getCookies.getCookies()["username"]){
+                    setIsLeagueOwner(true)
+                }
+            }
+        });
+
         setIsLoading(false);
     }, []);
 
+    const startDraft = async () => {
+        const fullOrder = generateOrder(leagueData.numberOfPlayers);
+        const totalPicks = 32;
+        const res = await requests.startDraft(leagueData.leagueID, fullOrder, totalPicks);
+    }
+
     return (
         <main>
-            <Header user={getCookies.getCookies()['userName']}/>
+            <Header user={getCookies.getCookies()['username']}/>
             {
                 
                 <div>
                     <div className='league-header'>
-                        <h3>League Name: {leagueData.name}</h3>
-                        <h4>League ID: {leagueData.leagueID}</h4>
-                        <h4>League Password: {leagueData.password}</h4>
-                        {/* this stuff will be cleaned up and formatted better */}
-                        <h4>Draft Day: {
-                                ! isLoading &&
-                                draftDate.toDateString() + ' ' + draftDate.toLocaleTimeString()
-                            }
-                        </h4>
-                        <NavLink to={`/draft/${leagueID}`} className='draftGoToBtn'>Go To Draft</NavLink>    
-                        
+                        <div className='leagueTitle'>
+                            <h2 className='leagueName'>{leagueData.name}</h2>
+                            <img src={infoIcon} className='infoIcon' onClick={() => openPopup('#leagueInfoPopupBG')}></img>
+                        </div>
+                        <div id='leagueInfoPopupBG'>
+                            <div id='leagueInfoPopupContent'>
+                                <h4>League ID: {leagueData.leagueID}</h4>
+                                <h4>League Password: {leagueData.password}</h4>
+                                <ul id='scoringStructure'>
+                                    <li>Group Stage Win: 2 points</li>
+                                    <li>Group Stage Tie: 1 point</li>
+                                    <li>Round of 16 Win: 4 points</li>
+                                    <li>Quaterfinal Win: 6 points</li>
+                                    <li>Semifinal Win: 8 points</li>
+                                    <li>Final Win: 10 points</li>
+                                </ul>
+                                <button className='closeLeagueInfoPopup' id='closeBtn' onClick={() => closePopup('#leagueInfoPopupBG')}>Close</button>
+                            </div>
+                        </div>
+                        {
+                            ! isLoading &&
+                            draftStatus === "PRE" && isLeagueOwnwer ?
+                            <div>
+                                <div>Click the button to start the draft once everyone is ready!</div>
+                                <button className='draftGoToBtn' onClick={startDraft}>Start Draft</button>
+                            </div>
+                            :
+                            draftStatus === "PRE" && ! isLeagueOwnwer ?
+                                <div>
+                                    Ask the league owner to start the draft once everyone is ready!
+                                </div>
+                            :
+                            draftStatus === "LIVE" ?
+                            <div>
+                                <div>Draft Is Live!</div><br></br>
+                                <NavLink to={`/draft/${leagueID}`} className='draftGoToBtn'>Go To Draft</NavLink>
+                            </div>
+                            :
+                            draftStatus === "POST" ?
+                            <div></div>
+                            :
+                            <div></div>
+                        }
                     </div>
                     <div className='main-content'>
                         

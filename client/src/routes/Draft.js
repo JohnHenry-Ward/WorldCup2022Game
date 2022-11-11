@@ -43,6 +43,12 @@ const Draft = () => {
         const g = await requests.getGroupStage();
         setGroupStage(JSON.parse(g)[0].league.standings);
         const l = await requests.getLeagueData(leagueID);
+        if (draft.checkIfDraftIsDone(l.draft.pickStatus.currentPick, l.draft.pickStatus.totalPicks)) {
+            window.alert('The draft has already happend!');
+            await requests.endDraft(leagueID);
+            window.location.replace("/league/" + leagueID);
+            return;
+        }
         setLeagueData(l);
         setCurrentPick(l.draft.pickStatus.currentPick);
         setMaxPicks(l.draft.pickStatus.totalPicks);
@@ -75,7 +81,7 @@ const Draft = () => {
         setPlayers(l.players);
 
         let cookies = getCookies.getCookies();
-        setLoggedInUserName(cookies['userName']);
+        setLoggedInUserName(cookies['username']);
 
         setIsLoading(false);
         draft.setEventListeners(setCurrentTeam, temp); //must do this after page is loaded
@@ -90,7 +96,14 @@ const Draft = () => {
                 temp = p.playerName;
             }
         });
+
         setCurrentPlayerName(temp);
+        if (getCookies.getCookies()['username'] !== temp) {
+            document.querySelector('.draftClickDisableWrapper').style.pointerEvents = 'auto'; // set to none after testing
+        } else {
+            document.querySelector('.draftClickDisableWrapper').style.pointerEvents = 'auto';
+        }
+
     }, [players, currentPick, leagueData]);
 
     useEffect(() => {
@@ -98,6 +111,7 @@ const Draft = () => {
             draft.scrollOrderElement('current');
         }
     }, [isLoading]);
+
 
     // useEffect(() => {
     //     setInterval( async () => {
@@ -128,7 +142,8 @@ const Draft = () => {
     
     return (
         <div className='draft'>
-            <Header user={getCookies.getCookies()['userName']} />
+            <Header user={getCookies.getCookies()['username']} />
+            <div className='draftClickDisableWrapper'>
             {
                 !isLoading &&
                 <div>
@@ -140,7 +155,11 @@ const Draft = () => {
                         <div className='groups-wrapper'>
                             <div className='order-and-status'>
                                 <div className='status'>
-                                    <div className='currentPicker'>On The Clock: {currentPlayerName}</div>
+                                    <div className='onTheClock'>On The Clock:</div>
+                                    <div className='currentPicker'>
+                                        <div className="player-circle" id={"player-circle-p" + currentPlayerNum}></div>
+                                        {currentPlayerName}
+                                    </div>
                                     {/* <div className='pickTimer'>Time Left: 1:00</div> */}
                                     <div className='pickTracker'>Pick: {currentPick} / {maxPicks}</div>
                                 </div>
@@ -152,8 +171,12 @@ const Draft = () => {
                                         let res = draft.confirmDraftSelection(currentTeam, currentPlayerNum, leagueID);
                                         if (res === true) {
                                             draft.updateDraftedTeams(currentTeam, currentPlayerNum, draftedTeams, setDraftedTeams);
-                                            draft.goToNextPlayer(currentPick, setCurrentPick);
-                                            draft.scrollOrderElement('next'); 
+                                            if (draft.checkIfDraftIsDone(currentPick+1, maxPicks)) {
+                                                draft.goToNextPlayer(currentPick, setCurrentPick);
+                                                window.alert("The draft has ended. Good Luck!")
+                                            } else {
+                                                draft.scrollOrderElement('next'); 
+                                            } 
                                         }
                                     
                                     }}>
@@ -170,6 +193,7 @@ const Draft = () => {
                     }
                 </div>
             }
+            </div>
         </div>
     );
 }

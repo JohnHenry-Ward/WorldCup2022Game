@@ -82,7 +82,7 @@
     margin: 0 0;
 }
 
-.status{
+.gameStatus{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -112,4 +112,18 @@
     height: 1.7em;
     vertical-align: middle;
     padding: 5px 0;
+}
+
+/* Small Fixture */
+
+#smallFixture-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-weight: 600;
+    margin: 0.3em 0;
+}
+
+#smallFixture-fixture{
+    width: 65%;
 }

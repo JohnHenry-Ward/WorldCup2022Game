@@ -11,7 +11,7 @@ const Account = () => {
     
     return (
         <div className='Account'>
-            <Header user={getCookies.getCookies()['userName']} />
+            <Header user={getCookies.getCookies()['username']} />
             <h1>Account</h1>
         </div>
     );

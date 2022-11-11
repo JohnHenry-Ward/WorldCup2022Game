@@ -17,7 +17,8 @@
 .accountInfo{
     display: flex;
     flex-direction: row;
-    width: 8vw;
+    column-gap: 5px;
+    max-width: 20vw;
 }
 
 .accountInfo:hover{
@@ -31,5 +32,6 @@
 .userName{
     font-weight: bold;
     margin: auto;
-    text-align: center;
+    text-align: right;
+    width: 100%;
 }

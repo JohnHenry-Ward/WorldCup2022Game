@@ -10,80 +10,82 @@ const Users = require('../models/Users');
 const router = express.Router();
 let CLIENT_ID = null;
 const { OAuth2Client } = require('google-auth-library');
+const { response } = require('express');
 
 /* Middleware */
 router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
 router.use(cookieParser());
-
-if (process.env.NODE_ENV !== 'production') {
-    const config = require('../config/dev_config.json');
-    CLIENT_ID = config.GoogleClientID;
-} else {
-    CLIENT_ID = process.env.googleClientId;
-    console.log(CLIENT_ID);
-}
-
-const client = new OAuth2Client(CLIENT_ID);
 
 /* Routes */
 
 /* 
-    Route: /login
+    Route: /login/createuser
     Method: POST
-    Purpose: attempts to log a user in (putting their login info in cookies)
+    Purpose: attempts to create a user and logs them in
     Params: none
 */
-router.post('/', async (req, res) => {
-    verify(req.body.credential)
-        .then(payload => {
-            // check if the user is in the DB
-            const email = payload['email'];
-            const name = payload['given_name'];
-            res.cookie('signedIn', true);
-            res.cookie('userName', name);
-            res.cookie('id', email);
+router.post('/createUser', async (req, res) => {
+    const payload = req.body;
+    const username = payload['username'];
+    const password = payload['password'];
+    Users.find({ username: username }, (err, result) => {
+        if (err) {
+            console.log('Error when finding user')
+            console.log(err);
+        } else {
+            if (result.length === 0) {
+                const newUser = new Users({
+                    username: username,
+                    password: password,
+                    leagues: []
+                });
 
-            Users.find({ id: email }, (err, result) => {
-                if (err) {
-                    console.log('Error when finding user')
-                    console.log(err);
-                } else {
-                    if (result.length === 0) {
-                        const newUser = new Users({
-                            name: name,
-                            id: email,
-                            leagues: []
-                        });
-
-                        newUser.save((err, user) => {
-                            if (err) {
-                                console.log('Error adding user to database');
-                                console.log(err);
-                            } else {
-                                console.log('New user added successfully');
-                                console.log(user);
-                            }
-                        })
+                newUser.save((err, user) => {
+                    if (err) {
+                        console.log('Error adding user to database');
+                        console.log(err);
+                        res.status(500).json({'status': 'error'});
                     } else {
-                        console.log('User has signed in before, no need to add to database');
+                        console.log('New user added successfully');
+                        console.log(user);
+                        res.status(200).json({'status': 'success'});
                     }
-                }
-            });
-            res.redirect('http://localhost:3000/'); //better way to do this?
-        })
-        .catch(e => {
-            console.log(e);
-            res.send('ERROR');
-        });
+                })
+            } else {
+                console.log('Username exists');
+                res.status(200).json({'status': 'duplicate'});
+            }
+        }
+    });
 });
 
-/* Function to verify and decode JWT */
-async function verify(token) {
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: CLIENT_ID,
+/* Routes */
+
+/* 
+    Route: /login/loginUser
+    Method: POST
+    Purpose: attempts to log a user in if they exist
+    Params: username, password
+*/
+router.post('/loginUser', async (req, res) => {
+    const payload = req.body;
+    const username = payload['username'];
+    const password = payload['password'];
+    Users.find({ username: username, password: password }, (err, result) => {
+        if (err) {
+            console.log('Error when finding user')
+            console.log(err);
+        } else {
+            if (result.length === 0) {
+                console.log('No user found');
+                res.status(404).json({'status': 'error'});
+            } else {
+                console.log('User has signed in before, no need to add to database');
+                res.status(200).json({'status': 'success'});
+            }
+        }
     });
-    return ticket.getPayload();
-}
+});
 
 module.exports = router;

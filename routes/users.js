@@ -30,13 +30,13 @@ if (process.env.NODE_ENV !== 'production') {
     Params: ID (user email)
 */
 router.get('/:ID/', async (req, res) => {
-    const id = req.params['ID'];
-    const user = await Users.findOne({ 'id' : id });
+    const username = req.params['ID'];
+    const user = await Users.findOne({ 'username' : username });
     if (user != null) {
         res.json(user);
     } else {
         res.json(
-            { 'msg' : `no user with email: ${id}`,
+            { 'msg' : `no user with email: ${username}`,
             'code' : 404
             }
         )

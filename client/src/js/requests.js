@@ -5,6 +5,7 @@ const axios = require('axios');
 const popup = require('./popup');
 
 const createLeague = async (name, password, dateTime) => {
+    console.log('2: ' + dateTime);
     axios({
         method: 'POST',
         url: '/leagues/create',
@@ -113,5 +114,99 @@ const requestDraftSelection = async (team, playerNumber, leagueID) => {
     
 }
 
+const loginUser = async (username, password) => {
+    
+    return axios({
+        method: 'POST',
+        url: '/login/loginUser',
+        data: {
+            username: username,
+            password: password
+        }
+    })
+    .then((res) => {
+        if (res.data.status === 'error') {
+            return {
+                "status": "error",
+                "msg": "error signing in"
+            }
+        }
+        else {
+            return {
+                "status": "success"
+            };
+        }
+    })
+    .catch((error) => {
+        console.log('Request failed!')
+        return {
+            "status": "error",
+            "msg": "error signing in"
+        }
+    });
+}
+
+const createUser = async (username, password) => {
+
+    return axios({
+        method: 'POST',
+        url: '/login/createUser',
+        data: {
+            username: username,
+            password: password
+        }
+    })
+    .then((res) => {
+        return res.data;
+    })
+    .catch((error) => {
+        console.log('Request failed!');
+        console.log(error);
+        return {
+            "status": "error",
+            "msg": "error creating account"
+        }
+    });
+}
+
+const startDraft = (leagueID, order) => {
+    return axios({
+        method: 'POST',
+        url: '/leagues/startDraft',
+        data: {
+            leagueID,
+            order
+        }
+    })
+    .then((res) => {
+        return res.data
+    })
+    .catch((error) => {
+        console.log('Request failed!');
+        console.log(error);
+        return {
+            "status": "error",
+            "msg": "error starting draft"
+        }
+    })
+}
+
+const endDraft = (leagueID) => {
+    return axios({
+        method: 'POST',
+        url: '/leagues/endDraft',
+        data: {
+            leagueID
+        }
+    })
+    .then((res) => {
+        return res.data;
+    })
+    .catch((error) => {
+        console.log('Request failed!');
+        console.log(error);
+    })
+}
+
 export { createLeague, joinLeague, getLeagues, getLeagueData, getFixtures, getGroupStage,
-         requestDraftSelection }
+         requestDraftSelection, loginUser, createUser, startDraft, endDraft }

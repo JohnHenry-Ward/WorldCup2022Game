@@ -9,6 +9,10 @@ import '../../css/leaguePage/groups.css';
 
 const Group = ({ group, players }) => {
 
+    group.sort((a, b) => {
+        return a.points < b.points;
+    })
+
     return (
         <div className="group">
             <h5 className="group-stage-title">{group[0].group}</h5>

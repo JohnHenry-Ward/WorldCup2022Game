@@ -110,7 +110,7 @@ const Schedule = ({ players, fixtures, groups }) => {
                 :
                 'Games TDB'
             }
-            <p className="stage-title">Third Place Game</p>
+            <p className="stage-title">Third Place Game (not counted)</p>
             {
                 (isSorted && thirdPlace.length !== 0) ?
                 thirdPlace.map((game) => {

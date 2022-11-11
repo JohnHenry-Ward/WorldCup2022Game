@@ -9,20 +9,20 @@ import '../../css/draftPage/draft.css';
 const draft = require('../../js/draft');
 
 
-const Tracker = ({ players, draftedTeams, maxPicks }) => {
+const Tracker = ({ players, draftedTeams, maxPicks, order }) => {
 
     let playerCount = 0;
-
     let sortedPlayers = [];
+    let firstNPicks = order.slice(0, players.length);
+
+    firstNPicks.forEach(pick => {
+        players.forEach(p => {
+            if(p.playerNumber === pick) {
+                sortedPlayers.push(p)
+            }
+        });
+    });
     
-    players.forEach(p => {
-        sortedPlayers.push(p);
-    });
-
-    sortedPlayers.sort((a, b) => {
-        return a.pickNumber > b.pickNumber;
-    });
-
     return (
         <div className='tracker'>
             {
