@@ -39,6 +39,11 @@
     margin: 1vh 0.5vw 1vh 0.5vw;
 }
 
+.draftButtonsWrapper{
+    display: flex;
+    flex-direction: column;
+}
+
 .confirm-btn{
     width: 25%;
     height: 10vh;
@@ -251,4 +256,46 @@ td.right-round-draft{
 
 .draft-team-flag{
     margin-left: 10%;
+}
+
+#oddsAndRank{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: darkgray;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#oddsAndRankContent{
+    background-color: white;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 2vh 3vw;
+}
+
+#oddsAndRankWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-height: 70vh;
+    overflow: scroll;
+    column-gap: 5vw; 
+    padding: 10px;
+    margin: 5px;
+}
+
+.oddsAndRankData{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }

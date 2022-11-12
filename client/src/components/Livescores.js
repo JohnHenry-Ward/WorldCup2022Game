@@ -21,13 +21,19 @@ const Livescores = () => {
     useEffect(async () => {
         const fixtures = await getFixtures();
         let allF = JSON.parse(fixtures);
-        let result = allF.filter((f) => {
-            return Math.abs(dateDiffInDays(new Date(f.fixture.date), today)) < 45; // set this to 2 when done testing
-        });
-        result.sort((a, b) => {
-            return a.fixture.date > b.fixture.date;
-        })
-        setFixtures(result);
+        setFixtures(allF);
+        // let result = allF.filter((f) => {
+        //     return Math.abs(dateDiffInDays(new Date(f.fixture.date), today)) < 9; // set this to 2 when done testing
+        // });
+        // result.sort((a, b) => {
+        //     return a.fixture.date > b.fixture.date;
+        // })
+        // setFixtures(result);
+
+        // const livescoresElement = document.querySelector('.liveScoreboard-scores');
+        // const mostRelevantGame = document.querySelector('.mostRelevantGame');
+        // livescoresElement.scrollTo(0, mostRelevantGame)
+
     }, []);
 
     const dateDiffInDays = (a, b) => {
@@ -39,18 +45,20 @@ const Livescores = () => {
         return Math.floor((utc2 - utc1) / _MS_PER_DAY);
     }
 
+    let gameNumber = 0;
+
     return (
         <div className='liveScoreboard'>
             <h1 className='liveScoreboard-header'>Scoreboard</h1>
             <div className='liveScoreboard-scores'>
                 {
                     allFixtures.map(fixture => {
+                        gameNumber++;
                         return (
                             <div key={fixture.fixture.id}>
-                                <SmallFixture fixture={fixture} />
+                                <SmallFixture fixture={fixture} gameNumber={gameNumber} />
                             </div>
                         );
-                        
                     })
                 }
             </div>

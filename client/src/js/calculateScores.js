@@ -12,7 +12,7 @@ const calculateScores = (players, fixtures) => {
     }
 
     let roundPoints = {
-        'Group Stage W': 3,
+        'Group Stage W': 2,
         'Group Stage T': 1,
         '8th Finals': 4,
         'Quarter-finals': 6,

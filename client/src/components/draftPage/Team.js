@@ -6,12 +6,16 @@ import React from "react";
 /* Internal Requirements */
 // import '../../css/leaguePage/groups.css';
 const teamCodes = require('../../js/convert').teamCodes;
+const FIFArank = require('../../js/odds').FIFArank;
+const odds = require('../../js/odds').odds;
 
 const Team = ({ team, draftedTeams }) => {
     const teamCode = teamCodes[team.team.name];
 
+    let tooltip = 'FIFA Rank: ' + FIFArank[team.team.name] + '\n' + 'Odds: ' + odds[team.team.name];
+
     return (
-            <tr className="team-selectable" data-team={team.team.name} data-ignore='true'>
+            <tr className="team-selectable" data-team={team.team.name} data-ignore='true' title={tooltip}>
                 <td className="left-round-draft" data-ignore='true'>
                     <img src={require("../../images/flags/"+teamCode+".png")} className="team-flag" data-ignore='true' alt={teamCode+' flag'} />
                 </td>

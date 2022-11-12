@@ -14,6 +14,9 @@ import '../css/draftPage/draft.css';
 const getCookies = require('../js/getCookies');
 const requests = require('../js/requests');
 const draft = require('../js/draft');
+const popup = require('../js/popup');
+const FIFArank = require('../js/odds').FIFArank;
+const odds = require('../js/odds').odds;
 
 
 const Draft = () => {
@@ -43,22 +46,11 @@ const Draft = () => {
         const g = await requests.getGroupStage();
         setGroupStage(JSON.parse(g)[0].league.standings);
         const l = await requests.getLeagueData(leagueID);
-        if (draft.checkIfDraftIsDone(l.draft.pickStatus.currentPick, l.draft.pickStatus.totalPicks)) {
-            window.alert('The draft has already happend!');
-            await requests.endDraft(leagueID);
-            window.location.replace("/league/" + leagueID);
-            return;
-        }
         setLeagueData(l);
         setCurrentPick(l.draft.pickStatus.currentPick);
         setMaxPicks(l.draft.pickStatus.totalPicks);
         setCurrentOrder(l.draft.draftOrder);
         setDraftDate(new Date(l.draft.draftDate));
-
-        if (l.draft.hasDrafted === true) {
-            window.alert('The draft has already happend!');
-            window.history.back()
-        }
 
         let temp = [];
 
@@ -107,38 +99,44 @@ const Draft = () => {
     }, [players, currentPick, leagueData]);
 
     useEffect(() => {
-        if (!isLoading) {
+        if (!isLoading && !leagueData.draft.hasDrafted) {
             draft.scrollOrderElement('current');
         }
     }, [isLoading]);
 
 
-    // useEffect(() => {
-    //     setInterval( async () => {
-    //         console.log('Checking for updates...')
-    //         const l = await requests.getLeagueData(leagueID);
-    //         setLeagueData(l);
-    //         setCurrentPick(l.draft.pickStatus.currentPick);
-    //         let temp = [];
-    //         l.players.forEach(p => {
-    //             let picksPerPlayer = draft.picksPerPlayer(l.players.length);
-    //             let num = p.playerNumber;
-    //             let start = num * picksPerPlayer;
-    
-    //             for (let i = 0; i < picksPerPlayer; i++) {
-    //                 temp.push({'TBD' : num});
-    //             }
-    
-    //             p.teamsID.forEach(t => {
-    //                 temp[start] = {[t]: num};
-    //                 start++;
-    //             });
-    //         });
-    //         setDraftedTeams(temp);
-    //         draft.scrollOrderElement('current'); 
-    //         draft.setEventListeners(setCurrentTeam, temp); //must do this after page is loaded
-    //     }, 5000)
-    // }, [])
+    useEffect(() => {
+        if (!isLoading) {
+            if (!leagueData.draft.hasDrafted) {
+                setInterval( async () => {
+                    console.log('Checking for updates...')
+                    const l = await requests.getLeagueData(leagueID);
+                    setLeagueData(l);
+                    setCurrentPick(l.draft.pickStatus.currentPick);
+                    let temp = [];
+                    l.players.forEach(p => {
+                        let picksPerPlayer = draft.picksPerPlayer(l.players.length);
+                        let num = p.playerNumber;
+                        let start = num * picksPerPlayer;
+            
+                        for (let i = 0; i < picksPerPlayer; i++) {
+                            temp.push({'TBD' : num});
+                        }
+            
+                        p.teamsID.forEach(t => {
+                            temp[start] = {[t]: num};
+                            start++;
+                        });
+                    });
+                    setDraftedTeams(temp);
+                    draft.scrollOrderElement('current'); 
+                    draft.setEventListeners(setCurrentTeam, temp); //must do this after page is loaded
+                }, 5000)
+            } else {
+                window.alert('The draft is over!');
+            }
+        }
+    }, [isLoading])
     
     return (
         <div className='draft'>
@@ -147,49 +145,85 @@ const Draft = () => {
             {
                 !isLoading &&
                 <div>
-                    {
-                    /*!*/ leagueData.draft.hasDrafted ?
-                    <Timer countingTo={draftDate} text={'Until Draft!'} />
-                    :
                     <div className='groups-and-order'>
                         <div className='groups-wrapper'>
-                            <div className='order-and-status'>
-                                <div className='status'>
-                                    <div className='onTheClock'>On The Clock:</div>
-                                    <div className='currentPicker'>
-                                        <div className="player-circle" id={"player-circle-p" + currentPlayerNum}></div>
-                                        {currentPlayerName}
+                            {
+                                !leagueData.draft.hasDrafted &&
+                                <div>
+                                    <div className='order-and-status'>
+                                        <div className='status'>
+                                            <div className='onTheClock'>On The Clock:</div>
+                                            <div className='currentPicker'>
+                                                <div className="player-circle" id={"player-circle-p" + currentPlayerNum}></div>
+                                                {currentPlayerName}
+                                            </div>
+                                            <div className='pickTracker'>Pick: {currentPick} / {maxPicks}</div>
+                                        </div>
+                                        <Order maxPicks={maxPicks} players={players} currentPick={currentPick} order={currentOrder}/>
                                     </div>
-                                    {/* <div className='pickTimer'>Time Left: 1:00</div> */}
-                                    <div className='pickTracker'>Pick: {currentPick} / {maxPicks}</div>
+                                
+
+                                <Groups groups={groupStage} draftedTeams={draftedTeams}/>
+                                <div className='draftButtonsWrapper'>
+                                    <button className='confirm-btn'
+                                            onClick={() => {
+                                                let res = draft.confirmDraftSelection(currentTeam, currentPlayerNum, leagueID);
+                                                if (res === true) {
+                                                    if (draft.checkIfDraftIsDone(currentPick+1, maxPicks)) {
+                                                        requests.endDraft(leagueID);
+                                                        window.alert("The draft has ended. Good Luck!")
+                                                    } else {
+                                                        draft.goToNextPlayer(currentPick, setCurrentPick);
+                                                        draft.scrollOrderElement('next');
+                                                    }
+                                                    draft.updateDraftedTeams(currentTeam, currentPlayerNum, draftedTeams, setDraftedTeams);
+                                                }
+                                            
+                                            }}>
+                                        Select&nbsp;
+                                        <span id='selection'></span>
+                                    </button>
+                                    <button className='confirm-btn' onClick={(e) => popup.openPopup('#oddsAndRank')}>Rankings & Odds</button>
                                 </div>
-                                <Order maxPicks={maxPicks} players={players} currentPick={currentPick} order={currentOrder}/>
-                            </div>
-                            <Groups groups={groupStage} draftedTeams={draftedTeams}/>
-                            <button className='confirm-btn'
-                                    onClick={() => {
-                                        let res = draft.confirmDraftSelection(currentTeam, currentPlayerNum, leagueID);
-                                        if (res === true) {
-                                            draft.updateDraftedTeams(currentTeam, currentPlayerNum, draftedTeams, setDraftedTeams);
-                                            draft.goToNextPlayer(currentPick, setCurrentPick);
-                                            draft.scrollOrderElement('next');
-                                            if (draft.checkIfDraftIsDone(currentPick, maxPicks)) {
-                                                window.alert("The draft has ended. Good Luck!")
-                                            }
-                                        }
-                                    
-                                    }}>
-                                Select&nbsp;
-                                <span id='selection'></span>
-                            </button>
+                                <div className='popupBG' id='oddsAndRank'>
+                                    <div className='popupContent' id='oddsAndRankContent'>
+                                        <div id='oddsAndRankWrapper'>
+                                            <div>
+                                                <h4>FIFA Rank</h4>
+                                                <div className='oddsAndRankData'>
+                                                    {
+                                                        Object.keys(FIFArank).map(team => {
+                                                            return (
+                                                                <div key={team}>{team + ': ' + FIFArank[team]}</div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h4>Odds</h4>
+                                                <div className='oddsAndRankData'>
+                                                    {
+                                                        Object.keys(odds).map(team => {
+                                                            return (
+                                                                <div key={team}>{team + ': ' + odds[team]}</div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button id='closeBtn' onClick={(e) => popup.closePopup('#oddsAndRank')}>Close</button>
+                                    </div>
+                                </div>
+                                </div>
+                            }
                             <h1 className='draft-title'>Pick Tracker</h1>
                             <div className='picks-tracker'>
                                 <Tracker players={players} draftedTeams={draftedTeams} maxPicks={maxPicks} order={currentOrder} />
                             </div>
                         </div>
-                        
                     </div>
-                    }
                 </div>
             }
             </div>

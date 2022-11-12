@@ -5,7 +5,6 @@ const axios = require('axios');
 const popup = require('./popup');
 
 const createLeague = async (name, password, dateTime) => {
-    console.log('2: ' + dateTime);
     axios({
         method: 'POST',
         url: '/leagues/create',
@@ -17,11 +16,14 @@ const createLeague = async (name, password, dateTime) => {
     })
     .then((res) => {
         console.log('SUCCESS');
-        console.log(res);
+        popup.openPopup('#joinError');
+        document.querySelector('#joinError .text').innerHTML = "League created! Refresh the page";
     })
     .catch((error) => {
         console.log('FAILURE');
         console.log(error);
+        popup.openPopup('#joinError');
+        document.querySelector('#joinError .text').innerHTML = "Error: " + error;
     });
 }
 
@@ -39,6 +41,9 @@ const joinLeague = async (ID, password) => {
             popup.openPopup('#joinError');
             document.querySelector('#joinError .text').innerHTML = res.data.msg;
             console.log(res.data.msg);
+        } else {
+            popup.openPopup('#joinError');
+            document.querySelector('#joinError .text').innerHTML = "You've joined the league! Refresh the page"
         }
     })
     .catch((error) => {

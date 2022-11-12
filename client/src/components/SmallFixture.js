@@ -7,7 +7,7 @@ import React from "react";
 import '../css/leaguePage/schedule.css';
 const teamCodes = require('../js/convert').teamCodes;
 
-const SmallFixture = ({ fixture }) => {
+const SmallFixture = ({ fixture, gameNumber }) => {
     const homeTeamCode = teamCodes[fixture.teams.home.name];
     const awayTeamCode = teamCodes[fixture.teams.away.name];
     const status = fixture.fixture.status.short;
@@ -18,7 +18,7 @@ const SmallFixture = ({ fixture }) => {
 
     return (
         <div className="fixture-wrapper" id="smallFixture-wrapper">
-            <div className="fixture" id='smallFixture-fixture' title={'Game ' + fixture.fixture.id}>
+            <div className="fixture" id='smallFixture-fixture' title={'Game ' + gameNumber}>
                 <div className="team" id="home">
                     <p className="team-name">{homeTeamCode}</p>
                     <img className="team-flag" src={require("../images/flags/"+homeTeamCode+".png")} alt={homeTeamCode+' flag'} />
