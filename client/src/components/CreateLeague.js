@@ -6,6 +6,7 @@ import { useState } from 'react';
 import '../css/CreateJoinLeague.css';
 const requests = require('../js/requests');
 const isSignedIn = require('../js/isSignedIn');
+const getCookies = require('../js/getCookies').getCookies;
 
 const CreateLeague = ({closePopup}) => {
 
@@ -18,9 +19,8 @@ const CreateLeague = ({closePopup}) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         let dateTime = new Date(leagueDraftDate + 'T' + leagueDraftTime);
-        console.log('1: ' + dateTime);
-        //console.log(dateTime.toDateString(), dateTime.toLocaleTimeString()); temp to show conversion to easy to read string
-        await requests.createLeague(leagueName, leaguePassword, dateTime);
+        let userID = getCookies()['username'];
+        await requests.createLeague(leagueName, leaguePassword, dateTime, userID);
         setLeagueName(' ');
         setLeaguePassword(' ');
         setLeagueDraftDate(' ');

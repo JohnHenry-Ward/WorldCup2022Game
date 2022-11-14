@@ -70,6 +70,7 @@ router.post('/create', async (req, res) => {
     const name = payload['leagueName'];
     const password = payload['leaguePassword'];
     const draftDate = payload['draftDate'];
+    const username = payload['username'];
     const leagueID = uuid();
     // user is already logged in (checked client side)
     const cookies = req.cookies;
@@ -98,9 +99,17 @@ router.post('/create', async (req, res) => {
         }
     });
 
-    // add the league to the users document
-    const result = await Users.findOneAndUpdate({ 'id' : cookies['id'] }, { $push: { leagues: { id: leagueID, name: name } }});
-
+    //add league to user
+    console.log(username, leagueID);
+    Users.findOneAndUpdate({'username' : username}, {$addToSet: { leagues: { id: leagueID, name: name }}},
+        (err, doc) => {
+            if (err) {
+                console.log(err);
+                console.log('Error adding league to user')
+            } else {
+                console.log('League added to user!');
+            }
+    });
     res.redirect('/');
 });
 

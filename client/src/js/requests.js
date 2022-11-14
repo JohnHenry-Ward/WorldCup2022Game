@@ -4,14 +4,15 @@ const axios = require('axios');
 /* Internal Requirements */
 const popup = require('./popup');
 
-const createLeague = async (name, password, dateTime) => {
+const createLeague = async (name, password, dateTime, userID) => {
     axios({
         method: 'POST',
         url: '/leagues/create',
         data: {
             leagueName: name,
             leaguePassword: password,
-            draftDate: dateTime
+            draftDate: dateTime,
+            username: userID
         }
     })
     .then((res) => {
