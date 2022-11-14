@@ -1,6 +1,6 @@
 /* Requirements */
 import React, {useState, useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 
 /* Other Components */
 import Header from "../components/Header";
@@ -224,6 +224,8 @@ const Draft = () => {
                             </div>
                         </div>
                     </div>
+                    {/* <button id='backToLeagueBtn' onClick={}>Back to League</button> */}
+                    <NavLink to={`/league/${leagueID}`} id='backToLeagueBtn'>Back To League</NavLink>
                 </div>
             }
             </div>

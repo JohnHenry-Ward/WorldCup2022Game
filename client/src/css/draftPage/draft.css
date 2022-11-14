@@ -299,3 +299,23 @@ td.right-round-draft{
     flex-direction: column;
     flex-wrap: wrap;
 }
+
+#backToLeagueBtn{
+    display: flex;
+    text-align: center;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: 2vh auto;
+    padding: 5px 10px;
+    background-color: var(--green);
+    color: white;
+    font-size: 1.2em;
+    border-radius: 15px;
+    border: none;
+}
+
+#backToLeagueBtn:hover{
+    cursor: pointer;
+}
