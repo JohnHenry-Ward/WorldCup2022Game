@@ -22,8 +22,8 @@ const PORT = process.env.PORT || 5000;
 /* Middleware */
 app.use((req, res, next) => {
     res.setHeader(
-        'Content-Security-Policy-Report-Only',
-        "default-src 'self' 'unsafe-inline' http://worldcupdraft.me/favicon.ico; font-src 'self'; img-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; frame-src 'self'"
+        'Content-Security-Policy',
+        "default-src 'self' 'unsafe-inline' http://worldcupdraft.me/favicon.ico; font-src 'self'; img-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; style-src 'self'; frame-src 'self'"
     );
     next();
 });
