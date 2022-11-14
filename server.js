@@ -20,6 +20,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 /* Middleware */
+app.use((req, res, next) => {
+    res.setHeader(
+        'Content-Security-Policy-Report-Only',
+        "default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
+    );
+    next();
+});
 app.use(bodyParser.urlencoded({ extended: false }));
 
 /* Routes */
