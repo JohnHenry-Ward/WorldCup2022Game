@@ -39,15 +39,20 @@ const selectTeam = (team, teams, setCurrentTeam) => {
 
     // select team
     const confirmBtnSelection = document.querySelector('.confirm-btn').querySelector('#selection');
+    const confirmBtn = document.querySelector('.confirm-btn');
     highlightGreen(team);
     confirmBtnSelection.innerHTML = team.getAttribute('data-team');
+    confirmBtn.style.background = '#27AE60';
+    confirmBtn.style.color = 'white';
+    confirmBtn.style.border = '3px solid white';
     setCurrentTeam(teamCodes[team.getAttribute('data-team')]);
 }
 
 const setEventListeners = (setCurrentTeam, draftedTeams) => {
     const teams = Array.from(document.querySelectorAll('.team-selectable'));
     const confirmBtnSelection = document.querySelector('.confirm-btn').querySelector('#selection');
-
+    const confirmBtn = document.querySelector('.confirm-btn');
+    
     teams.forEach(t => {
         let isDrafted = false;
 
@@ -70,6 +75,9 @@ const setEventListeners = (setCurrentTeam, draftedTeams) => {
     window.addEventListener('click', (e) => {
         if (e.target.getAttribute('data-ignore') !== 'true') {
             confirmBtnSelection.innerHTML = '';
+            confirmBtn.style.background = 'white';
+            confirmBtn.style.color = '#27AE60';
+            confirmBtn.style.border = '3px solid #27AE60';
             setCurrentTeam(null);
             teams.forEach(t => {
                 removeHighlight(t);

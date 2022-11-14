@@ -48,9 +48,9 @@
     width: 25%;
     height: 10vh;
     margin: 2vh auto;
-    border: none;
-    background-color: var(--green);
-    color: white;
+    border: 3px solid var(--green);
+    background-color: white;
+    color: var(--green);
     font-size: 1.2em;
     border-radius: 15px;
     background-repeat: no-repeat;

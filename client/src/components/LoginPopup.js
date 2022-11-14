@@ -68,22 +68,24 @@ const LoginPopup = ({user, logout, closePopup}) => {
                             <h4 id='popupTitle'>Signed in as: {user}</h4>
                             <div className='btnsWrapper'>
                                 <button onClick={logout} id='signOutBtn'>Sign Out</button>
-                                <NavLink to={'/account'} className='goToAccountBtn'>Go To Account</NavLink>
+                                {/* <NavLink to={'/account'} className='goToAccountBtn'>Go To Account</NavLink> */}
                             </div>
                         </div>
                         : 
                         <div>
                             <h4 id='popupTitle'>Sign In</h4>
-                            <h5 className='loginCreateSwapBtn' onClick={() => {popup.closePopup('#loginPopupBG'); popup.openPopup('#createAccountPopupBG');}}>Or create an account here!</h5>
                             <form className='loginCreateSwapForm' onSubmit={onSubmitLogin}>
                                 <input type='username' name='username' placeholder='Username' required onChange={(e) => setUsername(e.target.value)}></input>
                                 <input type='password' name='password' placeholder='Password' required onChange={(e) => setPassword(e.target.value)}></input>
                                 <input type='submit' value='Login' className='allButtons' id='submitFormBtn'></input>
+                                <button className='allButtons' id='signOutBtn' onClick={() => {popup.closePopup('#loginPopupBG'); popup.openPopup('#createAccountPopupBG');}}>Or Create An Account Here</button>
                             </form>
+                            
                         </div>
                     }
                     
                     <button className='allButtons' id='closeBtn' onClick={closePopup}>Close</button>
+                    
                 </div>
             </div>
             
@@ -91,15 +93,16 @@ const LoginPopup = ({user, logout, closePopup}) => {
                 <div id='createAccountPopupContent'>
                     <div>
                         <h4 id='popupTitle'>Create Account</h4>
-                        <h5 className='loginCreateSwapBtn' onClick={() => {popup.closePopup('#createAccountPopupBG'); popup.openPopup('#loginPopupBG');}}>Or log in here!</h5>
                         <form className='loginCreateSwapForm' onSubmit={onSubmitCreate}>
                             <input type='username' name='username' placeholder='Username' required onChange={(e) => setUsername(e.target.value)}></input>
                             <input type='password' name='password' placeholder='Password' required onChange={(e) => setPassword(e.target.value)}></input>
                             <input type='password' name='confirmPassword' placeholder='Confirm Password' required onChange={(e) => setConfirmPassword(e.target.value)}></input>
                             <input type='submit' value='Create' className='allButtons' id='submitFormBtn'></input>
+                            <button className='allButtons' id='signOutBtn' onClick={() => {popup.closePopup('#createAccountPopupBG'); popup.openPopup('#loginPopupBG');}}>Or Log In Here</button>
                         </form>
                     </div>
                     <button className='allButtons' id='closeBtn' onClick={closePopup}>Close</button>
+                    
                 </div>
             </div>
         </div>
