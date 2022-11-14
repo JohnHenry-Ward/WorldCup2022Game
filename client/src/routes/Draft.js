@@ -91,7 +91,7 @@ const Draft = () => {
 
         setCurrentPlayerName(temp);
         if (getCookies.getCookies()['username'] !== temp) {
-            document.querySelector('.draftClickDisableWrapper').style.pointerEvents = 'auto'; // set to none after testing
+            document.querySelector('.draftClickDisableWrapper').style.pointerEvents = 'none'; // set to none after testing
         } else {
             document.querySelector('.draftClickDisableWrapper').style.pointerEvents = 'auto';
         }

@@ -164,6 +164,7 @@ const confirmDraftSelection = (team, playerNumber, leagueID) => {
             return true;
         }
     } else {
+        window.alert('Please select a team first');
         console.log('ERROR: team, playerNumber, or leagueID is null');
         return false;
     }
