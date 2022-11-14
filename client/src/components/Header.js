@@ -43,7 +43,11 @@ const Header = ({user, setSignIn}) => {
 
 Header.defaultProps = {
     setSignIn: () => {
-        window.location.replace('http://localhost:3000');
+        if (window.location.toString().substring("localhost")) {
+            window.location.replace('http://localhost:3000/');
+        } else {
+            window.location.replace('http://worldcupdraft.me');
+        }
     }
 }
 
