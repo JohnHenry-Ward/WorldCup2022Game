@@ -36,7 +36,7 @@ html, body, .App{
 .ranksAndOddsBoard-team{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: left;
     width: 75%;
     background-color: var(--light-gray-bg);
     border-radius: 15px;
@@ -49,6 +49,25 @@ html, body, .App{
     justify-content: space-evenly;
     width: 20vw;
     margin: 2vh auto;
+}
+
+#ranksAndOddsBoard-flag{
+    margin-left: 10%;
+}
+
+#ranksAndOddsBoard-country{
+    margin-left: 5%;
+    width: 25%;
+}
+
+#ranksAndOddsBoard-rank{
+    margin-left: 5%;
+    width: 15%;
+}
+
+#ranksAndOddsBoard-odds{
+    margin-left: 5%;
+    width: 20%;
 }
 
 .sortBtn{
