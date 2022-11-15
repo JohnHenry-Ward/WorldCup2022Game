@@ -5,7 +5,6 @@ import { NavLink, useParams } from 'react-router-dom';
 /* Other Components */
 import Header from "../components/Header";
 import Groups from '../components/draftPage/Groups';
-import Timer from '../components/Timer';
 import Order from '../components/draftPage/Order';
 import Tracker from '../components/draftPage/Tracker';
 
