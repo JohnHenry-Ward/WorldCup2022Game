@@ -47,7 +47,7 @@ const Fixture = ({ game, players, groups, gameNumber }) => {
                 </div>
             </div>
             <div className="gameStatus">
-                <p className="text">
+                <p className={`text ${["1H", "2H", "HT", "2H", "ET", "P"].includes(status) ? "live" : ""}`}>
                     {
                         status === 'NS' ?
                         date

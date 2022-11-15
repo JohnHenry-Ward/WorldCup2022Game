@@ -62,7 +62,7 @@ const Schedule = ({ players, fixtures, groups }) => {
 
 
             <div className="stage">
-            <p className="stage-title">Group Stage</p>
+            <p className="stage-title">Group Stage (2 points for Win, 1 point for Tie)</p>
             {
                 (isSorted && groupStage.length !== 0) ?
                 groupStage.map((game) => {
@@ -74,7 +74,7 @@ const Schedule = ({ players, fixtures, groups }) => {
                 :
                 'Games TDB'
             }
-            <p className="stage-title">Round of 16</p>
+            <p className="stage-title">Round of 16 (4 points for Win)</p>
             {
                 (isSorted && roundOf16.length !== 0) ?
                 roundOf16.map((game) => {
@@ -86,7 +86,7 @@ const Schedule = ({ players, fixtures, groups }) => {
                 :
                 'Games TDB'
             }
-            <p className="stage-title">Quarter Finals</p>
+            <p className="stage-title">Quarter Finals (6 points for Win)</p>
             {
                 (isSorted && quarters.length !== 0) ?
                 quarters.map((game) => {
@@ -98,7 +98,7 @@ const Schedule = ({ players, fixtures, groups }) => {
                 :
                 'Games TDB'
             }
-            <p className="stage-title">Semi Finals</p>
+            <p className="stage-title">Semi Finals (8 points for Win)</p>
             {
                 (isSorted && semis.length !== 0) ?
                 semis.map((game) => {
@@ -122,7 +122,7 @@ const Schedule = ({ players, fixtures, groups }) => {
                 :
                 'Game TDB'
             }
-            <p className="stage-title">Final</p>
+            <p className="stage-title">Final (10 points for Win)</p>
             {
                 (isSorted && final.length !== 0) ?
                 final.map((game) => {
