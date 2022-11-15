@@ -11,26 +11,56 @@ html, body, .App{
     margin: 0;
 }
 
-.liveScoreboard{
+.ranksAndOddsBoard{
+    display: flex;
+    flex-direction: column;
+    column-gap: 0;
+}
+
+.ranksAndOddsBoard-header{
+    text-align: center;
+    height: 10%;
+    margin: 0;
+    padding: 0;
+}
+
+.ranksAndOddsBoard-wrapper{
     width: 50vw;
     height: 50vh;
     background-color: lightgray;
     margin: auto;
-    margin-top: 5vh;
     border-radius: 15px;
-}
-
-.liveScoreboard-header{
-    text-align: center;
-    height: 10%;
-}
-
-.liveScoreboard-scores{
-    display: flex;
-    flex-direction: column;
-    /* flex-wrap: wrap; */
-    height: 80%;
     overflow: scroll;
+}
+
+.ranksAndOddsBoard-team{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 75%;
+    background-color: var(--light-gray-bg);
+    border-radius: 15px;
+    margin: 5px auto;
+    align-items: center;
+}
+
+.ranksAndOddsBoard-buttons{
+    display: flex;
+    justify-content: space-evenly;
+    width: 20vw;
+    margin: 2vh auto;
+}
+
+.sortBtn{
+    background-color: var(--light-blue);
+    border: none;
+    border-radius: 15px;
+    color: white;
+    min-width: fit-content;
+}
+
+.sortBtn:hover{
+    cursor: pointer;
 }
 
 .countdown-wrapper{

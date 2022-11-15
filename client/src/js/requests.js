@@ -215,5 +215,18 @@ const endDraft = (leagueID) => {
     })
 }
 
+const getTeams = () => {
+    return axios({
+        method: 'GET',
+        url: '/teams'
+    })
+    .then((res) => {
+        return res.data
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
 export { createLeague, joinLeague, getLeagues, getLeagueData, getFixtures, getGroupStage,
-         requestDraftSelection, loginUser, createUser, startDraft, endDraft }
+         requestDraftSelection, loginUser, createUser, startDraft, endDraft, getTeams }
