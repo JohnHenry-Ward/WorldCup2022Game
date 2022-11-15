@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 5000;
 app.use((req, res, next) => {
     res.setHeader(
         'Content-Security-Policy',
-        "default-src * data:; font-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src 'self' 'unsafe-inline'"
+        "default-src 'self'; font-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src 'self' 'unsafe-inline'"
     );
     next();
 });
