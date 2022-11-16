@@ -18,12 +18,15 @@ const Livescores = () => {
     /* Use Effect */
     useEffect(async () => {
         const t = await getTeams();
+        t.sort((a, b) => {
+            return parseInt(a.rank) > parseInt(b.rank) ? 1 : -1;
+        });
         setTeams(t);
     }, []);
 
     const sortByRank = () => {
         const t = [...teams].sort((a, b) => {
-            return parseInt(a.rank) > parseInt(b.rank);
+            return parseInt(a.rank) > parseInt(b.rank) ? 1 : -1;
         });
         setTeams(t);
     }
@@ -34,6 +37,7 @@ const Livescores = () => {
                 parseInt(a.odds.split("/")[0]) / parseInt(a.odds.split("/")[1]) 
                 > 
                 parseInt(b.odds.split("/")[0]) / parseInt(b.odds.split("/")[1])
+                ? 1 : -1
             )
         });
         setTeams(t);

@@ -31,6 +31,7 @@ html, body, .App{
     margin: auto;
     border-radius: 15px;
     overflow: scroll;
+    overflow-x: hidden;
 }
 
 .ranksAndOddsBoard-team{
