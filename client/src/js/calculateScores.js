@@ -68,7 +68,7 @@ const calculateScores = (players, fixtures) => {
 
     // sort the players by score, largest to smallest
     players.sort((a, b) => {
-        return b.score - a.score;
+        return b.score - a.score ? 1 : -1;
     });
 
     return players;

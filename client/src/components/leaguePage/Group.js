@@ -10,7 +10,12 @@ import '../../css/leaguePage/groups.css';
 const Group = ({ group, players }) => {
 
     group.sort((a, b) => {
-        return a.points < b.points;
+        if (a.points == b.points) {
+            return a.goalsDiff < b.goalsDiff ? 1 : -1;
+        }
+        else {
+            return a.points < b.points ? 1 : -1;
+        }
     })
 
     return (
