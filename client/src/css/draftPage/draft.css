@@ -319,3 +319,7 @@ td.right-round-draft{
 #backToLeagueBtn:hover{
     cursor: pointer;
 }
+
+#strikethrough{
+    text-decoration: line-through;
+}

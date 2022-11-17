@@ -16,6 +16,7 @@ const draft = require('../js/draft');
 const popup = require('../js/popup');
 const FIFArank = require('../js/odds').FIFArank;
 const odds = require('../js/odds').odds;
+const codes = require('../js/convert').teamCodes;
 
 
 const Draft = () => {
@@ -192,9 +193,18 @@ const Draft = () => {
                                                 <div className='oddsAndRankData'>
                                                     {
                                                         Object.keys(FIFArank).map(team => {
-                                                            return (
-                                                                <div key={team}>{team + ': ' + FIFArank[team]}</div>
-                                                            )
+                                                            let x = {}
+                                                            x[codes[team]] = 0;
+                                                            
+                                                            if (draftedTeams.find(dt => dt[codes[team]] == 0)) {
+                                                                return (
+                                                                    <div key={team} id='strikethrough'>{team + ': ' + FIFArank[team]}</div>
+                                                                )
+                                                            } else {
+                                                                return (
+                                                                    <div key={team}>{team + ': ' + FIFArank[team]}</div>
+                                                                )
+                                                            }
                                                         })
                                                     }
                                                 </div>
@@ -204,9 +214,18 @@ const Draft = () => {
                                                 <div className='oddsAndRankData'>
                                                     {
                                                         Object.keys(odds).map(team => {
-                                                            return (
-                                                                <div key={team}>{team + ': ' + odds[team]}</div>
-                                                            )
+                                                            let x = {}
+                                                            x[codes[team]] = 0;
+                                                            
+                                                            if (draftedTeams.find(dt => dt[codes[team]] == 0)) {
+                                                                return (
+                                                                    <div key={team} id='strikethrough'>{team + ': ' + odds[team]}</div>
+                                                                )
+                                                            } else {
+                                                                return (
+                                                                    <div key={team}>{team + ': ' + odds[team]}</div>
+                                                                )
+                                                            }
                                                         })
                                                     }
                                                 </div>
@@ -223,7 +242,6 @@ const Draft = () => {
                             </div>
                         </div>
                     </div>
-                    {/* <button id='backToLeagueBtn' onClick={}>Back to League</button> */}
                     <NavLink to={`/league/${leagueID}`} id='backToLeagueBtn'>Back To League</NavLink>
                 </div>
             }
