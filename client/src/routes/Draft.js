@@ -141,111 +141,114 @@ const Draft = () => {
     return (
         <div className='draft'>
             <Header user={getCookies.getCookies()['username']} />
-            <div className='draftClickDisableWrapper'>
-            {
-                !isLoading &&
-                <div>
-                    <div className='groups-and-order'>
-                        <div className='groups-wrapper'>
-                            {
-                                !leagueData.draft.hasDrafted &&
-                                <div>
-                                    <div className='order-and-status'>
-                                        <div className='status'>
-                                            <div className='onTheClock'>On The Clock:</div>
-                                            <div className='currentPicker'>
-                                                <div className="player-circle" id={"player-circle-p" + currentPlayerNum}></div>
-                                                {currentPlayerName}
+            <div>
+                <div className='draftClickDisableWrapper'>
+                {
+                    !isLoading &&
+                    <div>
+                        <div className='groups-and-order'>
+                            <div className='groups-wrapper'>
+                                {
+                                    !leagueData.draft.hasDrafted &&
+                                    <div>
+                                        <div className='order-and-status'>
+                                            <div className='status'>
+                                                <div className='onTheClock'>On The Clock:</div>
+                                                <div className='currentPicker'>
+                                                    <div className="player-circle" id={"player-circle-p" + currentPlayerNum}></div>
+                                                    {currentPlayerName}
+                                                </div>
+                                                <div className='pickTracker'>Pick: {currentPick} / {maxPicks}</div>
                                             </div>
-                                            <div className='pickTracker'>Pick: {currentPick} / {maxPicks}</div>
+                                            <Order maxPicks={maxPicks} players={players} currentPick={currentPick} order={currentOrder}/>
                                         </div>
-                                        <Order maxPicks={maxPicks} players={players} currentPick={currentPick} order={currentOrder}/>
-                                    </div>
-                                
+                                    
 
-                                <Groups groups={groupStage} draftedTeams={draftedTeams}/>
-                                <div className='draftButtonsWrapper'>
-                                    <button className='confirm-btn'
-                                            onClick={() => {
-                                                let res = draft.confirmDraftSelection(currentTeam, currentPlayerNum, leagueID);
-                                                if (res === true) {
-                                                    if (draft.checkIfDraftIsDone(currentPick+1, maxPicks)) {
-                                                        requests.endDraft(leagueID);
-                                                        window.alert("The draft has ended. Good Luck!")
-                                                    } else {
-                                                        draft.goToNextPlayer(currentPick, setCurrentPick);
-                                                        draft.scrollOrderElement('next');
+                                    <Groups groups={groupStage} draftedTeams={draftedTeams}/>
+                                    <div className='draftButtonsWrapper'>
+                                        <button className='confirm-btn'
+                                                onClick={() => {
+                                                    let res = draft.confirmDraftSelection(currentTeam, currentPlayerNum, leagueID);
+                                                    if (res === true) {
+                                                        if (draft.checkIfDraftIsDone(currentPick+1, maxPicks)) {
+                                                            requests.endDraft(leagueID);
+                                                            window.alert("The draft has ended. Good Luck!")
+                                                        } else {
+                                                            draft.goToNextPlayer(currentPick, setCurrentPick);
+                                                            draft.scrollOrderElement('next');
+                                                        }
+                                                        draft.updateDraftedTeams(currentTeam, currentPlayerNum, draftedTeams, setDraftedTeams);
                                                     }
-                                                    draft.updateDraftedTeams(currentTeam, currentPlayerNum, draftedTeams, setDraftedTeams);
-                                                }
-                                            
-                                            }}>
-                                        Select&nbsp;
-                                        <span id='selection'></span>
-                                    </button>
-                                    <button className='confirm-btn' onClick={(e) => popup.openPopup('#oddsAndRank')}>Rankings & Odds</button>
-                                </div>
-                                <div className='popupBG' id='oddsAndRank'>
-                                    <div className='popupContent' id='oddsAndRankContent'>
-                                        <div id='oddsAndRankWrapper'>
-                                            <div>
-                                                <h4>FIFA Rank</h4>
-                                                <div className='oddsAndRankData'>
-                                                    {
-                                                        Object.keys(FIFArank).map(team => {
-                                                            let x = {}
-                                                            x[codes[team]] = 0;
-                                                            
-                                                            if (draftedTeams.find(dt => dt[codes[team]] == 0)) {
-                                                                return (
-                                                                    <div key={team} id='strikethrough'>{team + ': ' + FIFArank[team]}</div>
-                                                                )
-                                                            } else {
-                                                                return (
-                                                                    <div key={team}>{team + ': ' + FIFArank[team]}</div>
-                                                                )
-                                                            }
-                                                        })
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h4>Odds</h4>
-                                                <div className='oddsAndRankData'>
-                                                    {
-                                                        Object.keys(odds).map(team => {
-                                                            let x = {}
-                                                            x[codes[team]] = 0;
-                                                            
-                                                            if (draftedTeams.find(dt => dt[codes[team]] == 0)) {
-                                                                return (
-                                                                    <div key={team} id='strikethrough'>{team + ': ' + odds[team]}</div>
-                                                                )
-                                                            } else {
-                                                                return (
-                                                                    <div key={team}>{team + ': ' + odds[team]}</div>
-                                                                )
-                                                            }
-                                                        })
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button id='closeBtn' onClick={(e) => popup.closePopup('#oddsAndRank')}>Close</button>
+                                                
+                                                }}>
+                                            Select&nbsp;
+                                            <span id='selection'></span>
+                                        </button>
+                                        <button className='confirm-btn' onClick={(e) => popup.openPopup('#oddsAndRank')}>Rankings & Odds</button>
                                     </div>
+                                    <div className='popupBG' id='oddsAndRank'>
+                                        <div className='popupContent' id='oddsAndRankContent'>
+                                            <div id='oddsAndRankWrapper'>
+                                                <div>
+                                                    <h4>FIFA Rank</h4>
+                                                    <div className='oddsAndRankData'>
+                                                        {
+                                                            Object.keys(FIFArank).map(team => {
+                                                                let x = {}
+                                                                x[codes[team]] = 0;
+                                                                
+                                                                if (draftedTeams.find(dt => dt[codes[team]] == 0)) {
+                                                                    return (
+                                                                        <div key={team} id='strikethrough'>{team + ': ' + FIFArank[team]}</div>
+                                                                    )
+                                                                } else {
+                                                                    return (
+                                                                        <div key={team}>{team + ': ' + FIFArank[team]}</div>
+                                                                    )
+                                                                }
+                                                            })
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h4>Odds</h4>
+                                                    <div className='oddsAndRankData'>
+                                                        {
+                                                            Object.keys(odds).map(team => {
+                                                                let x = {}
+                                                                x[codes[team]] = 0;
+                                                                
+                                                                if (draftedTeams.find(dt => dt[codes[team]] == 0)) {
+                                                                    return (
+                                                                        <div key={team} id='strikethrough'>{team + ': ' + odds[team]}</div>
+                                                                    )
+                                                                } else {
+                                                                    return (
+                                                                        <div key={team}>{team + ': ' + odds[team]}</div>
+                                                                    )
+                                                                }
+                                                            })
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button id='closeBtn' onClick={(e) => popup.closePopup('#oddsAndRank')}>Close</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                }
+                                <h1 className='draft-title'>Pick Tracker</h1>
+                                <div className='picks-tracker'>
+                                    <Tracker players={players} draftedTeams={draftedTeams} maxPicks={maxPicks} order={currentOrder} />
                                 </div>
-                                </div>
-                            }
-                            <h1 className='draft-title'>Pick Tracker</h1>
-                            <div className='picks-tracker'>
-                                <Tracker players={players} draftedTeams={draftedTeams} maxPicks={maxPicks} order={currentOrder} />
                             </div>
                         </div>
+                        
                     </div>
-                    <NavLink to={`/league/${leagueID}`} id='backToLeagueBtn'>Back To League</NavLink>
+                }
                 </div>
-            }
             </div>
+            <NavLink to={`/league/${leagueID}`} id='backToLeagueBtn'>Back To League</NavLink>
         </div>
     );
 }
