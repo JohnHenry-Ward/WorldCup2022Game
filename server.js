@@ -59,7 +59,7 @@ mongoose.connect(mongoURI, { useNewUrlParser : true }, (err, db) => {
 });
 
 /* Update scores every 5 minutes in hour 4, 7, 10, 13 in November/December */
-cron.schedule(fixtures_CRON, () => {
+cron.schedule(never_CRON, () => {
     
     // Request Scores and write them to ./db/fixtures.json
     console.log('Attempting to fetch updated fixtures');
@@ -92,7 +92,7 @@ cron.schedule(fixtures_CRON, () => {
 });
 
 /* Update standings at 4:31, 7:31, 10:31, 13:31 in November/December */
-cron.schedule(groups_CRON, () => {
+cron.schedule(never_CRON, () => {
 
     // Request Group Stage standings, Write them to ./db/groupStage.json
     console.log('Attempting to fetch updated Group Stage');
