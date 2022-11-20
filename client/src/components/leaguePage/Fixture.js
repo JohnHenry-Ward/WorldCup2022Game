@@ -56,19 +56,19 @@ const Fixture = ({ game, players, groups, gameNumber }) => {
                         'Full Time (' + game.score.penalty.home + '-' + game.score.penalty.away + ')'
                         :
                         status === '1H' ?
-                        "First Half"
+                        "LIVE"
                         :
                         status === 'HT' ?
-                        "Half Time"
+                        "LIVE"
                         :
                         status === '2H' ?
-                        "Second Half"
+                        "LIVE"
                         :
                         status === 'ET' ?
-                        "Extra Time"
+                        "LIVE"
                         :
                         status === 'P' ?
-                        "Penalty Kicks"
+                        "LIVE"
                         :
                         status === 'FT' ?
                         "Full Time"
