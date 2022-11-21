@@ -132,7 +132,7 @@ const League = () => {
                         </div>
 
                         <div className='standings'>
-                            <Standings players={players} fixtures={allFixtures} hasDrafted={hasDrafted}/>
+                            <Standings players={players} fixtures={allFixtures} hasDrafted={hasDrafted} />
                         </div>
                         
                     </div>

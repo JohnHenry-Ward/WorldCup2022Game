@@ -1,7 +1,8 @@
 const teamCodes = require('../js/convert').teamCodes;
 
-const calculateScores = (players, fixtures) => {
-    if (players.length === 0) {
+const calculateScores = async (players, fixtures) => {
+    console.log("Calculating Scores");
+    if (players.length === 0 || players === null) {
         return -1;
     }
 
@@ -21,7 +22,7 @@ const calculateScores = (players, fixtures) => {
         'Final': 10
     }
 
-    // calculate how many points each time has currently, O(32) time
+    // calculate how many points each team has currently, O(32) time
     fixtures.forEach(f => {
         if (f.fixture.status.short === 'FT' || f.fixture.status.short === 'AET' || f.fixture.status.short === 'PEN') {
             const round = f.league.round;

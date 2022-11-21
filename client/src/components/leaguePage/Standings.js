@@ -45,7 +45,7 @@ const Standings = ({ players, fixtures, hasDrafted }) => {
 
     return (
         <div>
-            <Players players={players} fixtures={fixtures}/>
+            <Players players={players} fixtures={fixtures} />
             {/* tooltips, could move to other component later */}
             {
                 players.map(p => {

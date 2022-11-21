@@ -1,5 +1,5 @@
 /* Libraries */
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 /* Other Components */
 import Player from "./Player";
@@ -12,7 +12,7 @@ const Players = ({ players, fixtures }) => {
 
     useEffect(() => {
         players = calculateScores(players, fixtures);
-    }, [players]);
+    }, [players, fixtures])
 
     let playerCount = 0;
 
@@ -25,7 +25,7 @@ const Players = ({ players, fixtures }) => {
                         players.map(p => {
                                 playerCount += 1;
                                 return (
-                                    <Player key={p.playerID} player={p} place={playerCount} />
+                                    <Player key={playerCount} player={p} place={playerCount} />
                                 );
                             })
                     }
