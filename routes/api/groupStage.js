@@ -6,6 +6,7 @@ const path = require('path');
 
 /* Local Variables */
 const router = express.Router();
+const Groups = require('../../models/Groups');
 
 /* Routes */
 
@@ -16,14 +17,15 @@ const router = express.Router();
     Params: none
 */
 router.get('/', (req, res) => {
-    fs.readFile(path.resolve(__dirname, '../../db/groupStage.json'), "utf8", (err, data) => {
+    Groups.findOne({'id': '1'}, (err, doc) => {
         if (err) {
-            console.log('Error reading Group Stage file');
-            console.log(err);
+            console.log("Error getting groups");
+            console.log(err)
         } else {
-            res.json(data);
+            console.log("Successfully got groups");
+            res.json(doc['groups']);
         }
-    });
+    })
 });
 
 module.exports = router;

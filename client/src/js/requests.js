@@ -77,7 +77,7 @@ const getFixtures = async () => {
         method: 'GET',
         url: '/api/fixtures'
     })
-    .then(res => res.data)
+    .then(res => res.data.fixtures)
     .catch(error => console.log(error));
 }
 

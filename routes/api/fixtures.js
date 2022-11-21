@@ -6,6 +6,7 @@ const path = require('path');
 
 /* Local Variables */
 const router = express.Router();
+const Fixtures = require('../../models/Fixtures');
 
 /* Routes */
 
@@ -16,14 +17,15 @@ const router = express.Router();
     Params: none
 */
 router.get('/', (req, res) => {
-    fs.readFile(path.resolve(__dirname, '../../db/fixtures.json'), "utf8", (err, data) => {
+    Fixtures.findOne({'id': '1'}, (err, doc) => {
         if (err) {
-            console.log('Error reading Fixtures file');
-            console.log(err);
+            console.log("Error getting fixtures");
+            console.log(err)
         } else {
-            res.json(data);
+            console.log("Successfully got fixtures");
+            res.json(doc);
         }
-    });
+    })
 });
 
 module.exports = router;

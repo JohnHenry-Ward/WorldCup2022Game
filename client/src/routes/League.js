@@ -37,13 +37,13 @@ const League = () => {
     /* Get Fixtures */
     useEffect(async () => {
         const fixtures = await requests.getFixtures();
-        setFixtures(JSON.parse(fixtures));
+        setFixtures(fixtures);
     }, []);
 
     /* Get Group Stage */
     useEffect(async () => {
         const g = await requests.getGroupStage();
-        setGroups(JSON.parse(g)[0].league.standings);
+        setGroups(g[0].league.standings);
     }, []);
 
     /* Get League Data */

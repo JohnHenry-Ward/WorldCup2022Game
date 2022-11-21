@@ -1,12 +1,28 @@
 const axios = require('axios');
+const mongoose = require('mongoose');
 const fs = require('fs');
+
+const Fixtures = require('./models/Fixtures');
+const Groups = require('./models/Groups');
 
 if (process.env.NODE_ENV !== 'production') {
     const config = require('./config/dev_config.json');
     rapidKey = config['RapidKey'];
+    mongoURI = config['mongoURI'];
 } else {
     rapidKey = process.env.rapidKey;
+    mongoURI = process.env.mongoURI;
 }
+
+
+/* Connect to MongoDB Database */
+mongoose.connect(mongoURI, { useNewUrlParser : true }, (err, db) => {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Database connected');
+    }
+});
 
 // Request Scores and write them to ./db/fixtures.json
 console.log('Attempting to fetch updated fixtures');
@@ -24,13 +40,15 @@ axios({
 })
 .then((doc) => {
     console.log('Successfully got the fixtures');
-    fs.writeFile('./db/fixtures.json', JSON.stringify(doc.data.response), (err) => {
-        if (err) {
-            console.log('Error writing Fixtures to internal db');
-        } else {
-            console.log('Fixtures data written succesfully');
-        }
-    })
+    try{
+        Fixtures.findOneAndReplace({"id": "1"}, {
+            fixtures: doc
+        });
+        console.log("Wrote Fixtures");
+    } catch(e) {
+        console.log("Error writing Fixtures");
+        console.log(e)
+    }
 })
 .catch((error) => {
     console.log('Failed to get the fixtures');
@@ -52,13 +70,15 @@ axios({
 })
 .then((doc) => {
     console.log('Successfully got the group stage');
-    fs.writeFile('./db/groupStage.json', JSON.stringify(doc.data.response), (err) => {
-        if (err) {
-            console.log('Error writing Group Stage to internal db');
-        } else {
-            console.log('Group Stage data written successfully');
-        }
-    })
+    try{
+        Groups.findOneAndReplace({"id": "1"}, {
+            groups: doc
+        });
+        console.log("Wrote Groups")
+    } catch(e) {
+        console.log("Error writing Groups");
+        console.log(e);
+    }
 })
 .catch((error) => {
     console.log('Failed to get the group stage');
