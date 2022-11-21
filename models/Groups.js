@@ -4,10 +4,6 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema({
     groups: {
         type: Array
-    },
-    id: {
-        type: String,
-        default: "1"
     }
 });
 
