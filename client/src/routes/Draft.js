@@ -44,7 +44,7 @@ const Draft = () => {
     useEffect(async () => {
         setIsLoading(true);
         const g = await requests.getGroupStage();
-        setGroupStage(JSON.parse(g)[0].league.standings);
+        setGroupStage(g[0].league.standings);
         const l = await requests.getLeagueData(leagueID);
         setLeagueData(l);
         setCurrentPick(l.draft.pickStatus.currentPick);
