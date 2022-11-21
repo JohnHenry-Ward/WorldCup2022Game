@@ -1,6 +1,6 @@
 const teamCodes = require('../js/convert').teamCodes;
 
-const calculateScores = async (players, fixtures) => {
+const calculateScores = (players, fixtures) => {
     console.log("Calculating Scores");
     if (players.length === 0 || players === null) {
         return -1;

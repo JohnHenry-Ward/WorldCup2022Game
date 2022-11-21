@@ -12,6 +12,7 @@ import Schedule from '../components/leaguePage/Schedule';
 import '../css/leaguePage/league.css';
 import infoIcon from '../images/icons/circle-info-solid.svg';
 import { openPopup, closePopup } from '../js/popup';
+import { calculateScores } from "../js/calculateScores";
 const getCookies = require('../js/getCookies');
 const requests = require('../js/requests');
 const { generateOrder, picksPerPlayer } = require('../js/draft');
@@ -66,6 +67,13 @@ const League = () => {
 
         setIsLoading(false);
     }, []);
+
+    useEffect(() => {
+        let calcPlayers = calculateScores(players, allFixtures);
+        if (calcPlayers !== -1) {
+            setPlayers(calcPlayers);
+        }
+    }, [players, allFixtures])
 
     const startDraft = async () => {
         const fullOrder = generateOrder(leagueData.numberOfPlayers);

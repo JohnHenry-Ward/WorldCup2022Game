@@ -10,9 +10,9 @@ import '../../css/leaguePage/standings.css';
 
 const Players = ({ players, fixtures }) => {
 
-    useEffect(() => {
-        players = calculateScores(players, fixtures);
-    }, [players, fixtures])
+    // useEffect(() => {
+    //     players = calculateScores(players, fixtures);
+    // }, [players, fixtures])
 
     let playerCount = 0;
 
