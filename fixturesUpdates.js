@@ -22,6 +22,7 @@ mongoose.connect(mongoURI, { useNewUrlParser : true }, (err, db) => {
         console.log(err);
     } else {
         console.log('Database connected');
+        fixtureRequest();
     }
 });
 const fixtureRequest = async () => {
@@ -50,7 +51,6 @@ const fixtureRequest = async () => {
                     console.log(err);
                     console.log("Error");
                 } else {
-                    console.log(i);
                     console.log("Success");
                 }
             });
@@ -59,10 +59,10 @@ const fixtureRequest = async () => {
             console.log("Error writing Fixtures");
             console.log(e)
         }
+        mongoose.disconnect();
     })
     .catch((error) => {
         console.log('Failed to get the fixtures');
+        mongoose.disconnect();
     });
 }
-
-fixtureRequest();
