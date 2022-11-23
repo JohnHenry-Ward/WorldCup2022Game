@@ -22,7 +22,7 @@ html{
 
 .main-content{
     display: flex;
-    margin: 5vh 3vw;
+    margin: 5vh 0vw;
 }
 
 .section-title{
@@ -39,7 +39,6 @@ html{
     /* display: flex;
     flex-direction: column; */
     margin: 0 auto 0 auto;
-
 }
 
 .draftGoToBtn{
