@@ -22,7 +22,17 @@ html{
 
 .main-content{
     display: flex;
+    flex-direction: row;
     margin: 5vh 0vw;
+}
+
+@media (max-width: 900px) {
+    .main-content{
+        flex-direction: column;
+    }
+    .schedule{
+        width: 100vw;
+    }
 }
 
 .section-title{
@@ -36,8 +46,6 @@ html{
 }
 
 .live-status{
-    /* display: flex;
-    flex-direction: column; */
     margin: 0 auto 0 auto;
 }
 

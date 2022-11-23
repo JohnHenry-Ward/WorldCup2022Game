@@ -7,10 +7,10 @@
 .schedule{
     display: flex;
     flex-direction: column;
-    /* width: 60vw;
-    max-width: 800px; */
+    width: 60vw;
+    max-width: 800px;
     padding: 0 0.6em;
-    /* margin: auto 0; */
+    margin: auto 0;
     border: 1px solid black;
     border-radius: 15px;
 }
