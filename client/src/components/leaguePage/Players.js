@@ -1,20 +1,13 @@
-/* Libraries */
-import React, { useState, useEffect } from "react";
-
 /* Other Components */
 import Player from "./Player";
 
 /* Internal Requirements */
-import { calculateScores } from "../../js/calculateScores";
 import '../../css/leaguePage/standings.css';
 
 const Players = ({ players, fixtures }) => {
 
-    // useEffect(() => {
-    //     players = calculateScores(players, fixtures);
-    // }, [players, fixtures])
-
-    let playerCount = 0;
+    let prevScore = -1;
+    let place = 0;
 
     return (
         <div className='player-scores'>
@@ -23,11 +16,14 @@ const Players = ({ players, fixtures }) => {
                 <tbody>
                     {
                         players.map(p => {
-                                playerCount += 1;
-                                return (
-                                    <Player key={playerCount} player={p} place={playerCount} />
-                                );
-                            })
+                            if (prevScore !== p.score) {
+                                place += 1;
+                                prevScore = p.score;
+                            }
+                            return (
+                                <Player key={p.playerNumber} player={p} place={place} />
+                            );
+                        })
                     }
                 </tbody>
             </table>
