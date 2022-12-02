@@ -1,5 +1,5 @@
 /* Libraries */
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 /* Internal Requirements */
 import '../../css/leaguePage/standings.css';
@@ -17,6 +17,8 @@ const Player = ({player, place}) => {
         8: '8th'
     }
 
+    console.log(player.score);
+
     return (
         <tr className="player" id={'player-' + player.playerNumber}>
             <td className="player-position left-round">{placeLookup[place]}</td>
@@ -27,7 +29,7 @@ const Player = ({player, place}) => {
             <td>
                 <div className="player-circle" id={"player-circle-p" + player.playerNumber}></div>
             </td>
-            <td className="player-points right-round">{player.score}</td> 
+            <td className="player-points right-round">{player.score || 0}</td> 
         </tr>
     );
 }

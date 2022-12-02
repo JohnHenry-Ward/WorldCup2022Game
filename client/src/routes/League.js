@@ -65,7 +65,9 @@ const League = () => {
             }
         });
 
-        setIsLoading(false);
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
     }, []);
 
     useEffect(() => {
@@ -73,7 +75,7 @@ const League = () => {
         if (calcPlayers !== -1) {
             setPlayers(calcPlayers);
         }
-    }, [players, allFixtures])
+    }, [allFixtures])
 
     const startDraft = async () => {
         const fullOrder = generateOrder(leagueData.numberOfPlayers);
@@ -85,7 +87,6 @@ const League = () => {
         <main>
             <Header user={getCookies.getCookies()['username']}/>
             {
-                
                 <div>
                     <div className='league-header'>
                         <div className='leagueTitle'>
