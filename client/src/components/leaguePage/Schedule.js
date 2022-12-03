@@ -30,7 +30,7 @@ const Schedule = ({ players, fixtures, groups }) => {
             }));
 
             setRoundOf16(fixtures.filter(f => {
-                return f.league.round.includes('8th Finals');
+                return f.league.round.includes('Round of 16');
             }));
 
             setQuarters(fixtures.filter(f => {
